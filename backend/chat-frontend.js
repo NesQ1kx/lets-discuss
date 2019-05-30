@@ -82,7 +82,7 @@ $(function () {
                 return;
             }
             // send the message as an ordinary text
-            connection.send(msg);
+            connection.send(JSON.stringify({message: msg, chek: 12}));
             $(this).val('');
             // disable the input field to make the user wait until server
             // sends back response
