@@ -99,7 +99,7 @@ var connections = [];
 /*
  {
     uuid: '',
-    theme_id : <Number>,
+    themeId : <Number>,
     connections: []
  }
  */
@@ -155,13 +155,16 @@ wsServer.on('request', function (request) {
             switch (frontendCommand) {
                 case 'LEAVE_ROOM':
                     if (!userData.hasOwnProperty('uuid')) errorCommand(connection, 'Не предоставлен номер комнаты');
-                    leaveRoomAction(userData.uuid); break;
-
-                case 'CONNECT':
-                    connectToRoom(connection, userData);
+                    leaveRoomAction(userData.uuid);
+                    roomUuid = false;
                     break;
 
-                case '':
+                case 'CONNECT':
+                    roomUuid = connectToRoom(connection, userData);
+                    break;
+
+                case 'MESSAGE':
+                    sendMessage(connection, userData);
                     break;
 
                 default:
@@ -206,10 +209,79 @@ function getRoomByUuid(uuid) {
     })[0];
 }
 
+function getReadyRoomByThemeId(themeId) {
+    return chatRooms.filter(function (room) {
+        return room.themeId === themeId && room.connections.length > 0;
+    })[0];
+}
+
+function sendMessage(websocketConnection, userData) {
+    if (!userData.hasOwnProperty('message') || !userData.hasOwnProperty('uuid')) {
+        errorCommand(websocketConnection, 'Мало данных');
+    }
+
+    var message = userData.message;
+    var uuid = userData.uuid;
+
+    var room = getRoomByUuid(uuid);
+
+    if (!room) {
+        errorCommand(websocketConnection, 'Бля, что-то пошло не так');
+    }
+
+    room.connections.forEach(function (item) {
+      if (item !== websocketConnection)  { // TODO: вот тут бля обязательно надо проверить, можно ли так сравнивать 2 разных конекшена, иначе себе будут приходить свои же сообщения
+          item.sendUTF(JSON.stringify({
+              action: 'NEW_MESSAGE',
+              payload: {
+                  message: message
+              }
+          }))
+      }
+    })
+}
+
 function connectToRoom(websocketConnection, userData) {
     if (!userData.hasOwnProperty('theme_id')) {
         errorCommand(websocketConnection, 'Не предоставлена id темы')
     }
+
+    var themeId = userData.theme_id;
+    var readyRoom = getReadyRoomByThemeId(themeId);
+
+    if (readyRoom) {
+        var companion = readyRoom.connections[0];
+        readyRoom.connections.push(websocketConnection);
+        websocketConnection.sendUTF(JSON.stringify({
+            action: 'CHAT_CONNECTED',
+            payload: {
+                uuid: readyRoom.uuid
+            }
+        }));
+
+        companion.sendUTF(JSON.stringify({
+            action: 'COMPANION_CONNECTED'
+        }));
+
+        return readyRoom.uuid;
+    }
+
+    var newRoom = {};
+    newRoom.uuid = uuidv1();
+    newRoom.themeId = themeId;
+    newRoom.connections = [websocketConnection];
+
+    chatRooms.push(newRoom);
+
+    websocketConnection.sendUTF(JSON.stringify({
+        action: 'ROOM_CREATED',
+        payload: {
+            uuid: newRoom.uuid,
+            theme_id: themeId
+        }
+    }));
+
+    return newRoom.uuid
 }
 
 function leaveRoomAction(roomUuid) {
