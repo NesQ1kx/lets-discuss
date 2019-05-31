@@ -4,6 +4,8 @@
 // Optional. You will see this name in eg. 'ps' or 'top' command
 process.title = 'node-chat';
 
+var HISTORY_SIZE = 300;
+
 // Port where we'll run the websocket server
 var webSocketsServerPort = 1337;
 
@@ -96,7 +98,7 @@ wsServer.on('request', function(request) {
                     color: userColor
                 };
                 history.push(obj);
-                history = history.slice(-100);
+                history = history.slice(-HISTORY_SIZE);
 
                 // broadcast message to all connected clients
                 var json = JSON.stringify({ type:'message', data: obj });
