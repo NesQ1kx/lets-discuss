@@ -2,6 +2,16 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 
 export default class HomeScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        this.navigation = this.props.navigation;
+        this.navigateToTopicsScreen = this.navigateToTopicsScreen.bind(this);
+    }
+
+    navigateToTopicsScreen() {
+        this.navigation.navigate('TopicsScreen');
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -21,7 +31,7 @@ export default class HomeScreen extends React.Component {
                 <View style={styles.imageContainer}>
                     <Image style={styles.image} source={require('../assets/logo.png')} />
                 </View>
-                <TouchableHighlight>
+                <TouchableHighlight onPress={this.navigateToTopicsScreen}>
                     <View style={styles.startButton}>
                         <Text style={{textTransform: 'uppercase',
                                       color: '#fff',
