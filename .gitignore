@@ -1,2 +1,39 @@
 app/node_modules/**/*
 app/.idea
+.idea
+/target/
+target/*
+*/target/
+target/
+logs/*
+**/*.log
+build.tar.gz
+!.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/build/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# dependencies
+/webapp/node_modules
+/backend/node_modules
+/logs/
