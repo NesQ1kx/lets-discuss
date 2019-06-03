@@ -143,8 +143,9 @@ wsServer.on('request', function (request) {
 
     // user sent some message
     connection.on('message', function (message) {
+        console.log('Message recived: ' + JSON.stringify(message));
         try {
-            var messageObject = JSON.parse(message);
+            var messageObject = JSON.parse(message.utf8Data);
             if (!messageObject.hasOwnProperty('action') && !messageObject.hasOwnProperty('user_data')) {
                 errorCommand(connection, 'Неправильный формат данных');
             }
@@ -172,6 +173,7 @@ wsServer.on('request', function (request) {
             }
 
         } catch (e) {
+            console.log("Parse error");
             errorCommand(connection, 'Неправильный формат данных');
         }
     });
