@@ -1,10 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
-import { MOCK_TOPICS } from "../mocks/mockTopics";
 import TopicItem from "../components/TopicItem";
 import { httpService } from "../services/httpService";
-
-const socket = new WebSocket('ws://192.168.157.27:1337');
+import SingleSocket from "../services/SocketSingletone";
 
 
 export default class TopicsScreen extends React.Component {
@@ -20,9 +18,12 @@ export default class TopicsScreen extends React.Component {
     }
 
     handleTopicTouch(item) {
-        console.log('call');
-        socket.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: item.id}}));
-        socket.onmessage = ev => {
+        SingleSocket.instance.onopen = () => {
+            setTimeout(() => {
+                SingleSocket.instance.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: item.id}}))
+            },100);
+        };
+        SingleSocket.instance.onmessage = ev => {
             const roomInfo = JSON.parse(ev.data);
             this.navigation.navigate('ChatRoomScreen', { item: item, roomInfo: roomInfo });
         }

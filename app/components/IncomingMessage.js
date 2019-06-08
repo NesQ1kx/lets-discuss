@@ -1,11 +1,11 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight, TextInput} from 'react-native';
+import {Image, StyleSheet, Text, View } from 'react-native';
 
 export const IncomingMessage = (props) => {
     return(
         <View style={styles.container}>
             <Text style={styles.messageText}>
-                Входящее сообщение
+                {props.message}
             </Text>
         </View>
     )

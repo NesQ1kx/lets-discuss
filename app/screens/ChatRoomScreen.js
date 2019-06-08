@@ -12,7 +12,7 @@ import {CompanionLeftModal} from "../components/CompanionLeftModal";
 import UserInput from "../components/UserInput";
 import {OutgoingMessage} from "../components/OutgoingMessage";
 import {IncomingMessage} from "../components/IncomingMessage";
-import { socket } from "../services/SocketSingletone";
+import SingleSocket from "../services/SocketSingletone";
 
 
 export default class ChatRoomScreen extends React.Component {
@@ -40,33 +40,29 @@ export default class ChatRoomScreen extends React.Component {
         this.chooseTopicAnswer = this.chooseTopicAnswer.bind(this);
         this.handleOutgoingMessage = this.handleOutgoingMessage.bind(this);
         this.handleIncomingMessage = this.handleIncomingMessage.bind(this);
-
-        socket.onopen = () => {
-            console.log('SOCKET CONNECTED');
-        };
-
-        socket.onmessage = (ev) => {
-            console.log(ev);
-            const data = JSON.parse(ev.data);
-            switch (data.action) {
-                case 'COMPANION_CONNECTED':
-                    this.setState({ searchCompanion: false});
-                    break;
-                case 'NEW_MESSAGE':
-                    this.handleIncomingMessage();
-                    break;
-            }
-        };
     }
-
-
-    
 
     componentDidMount() {
         if (this.roomInfo.action === 'CHAT_CONNECTED') {
             this.setState({ searchCompanion: false});
         }
-v    }
+
+        SingleSocket.instance.onmessage = (ev) => {
+            const data = JSON.parse(ev.data);
+            console.log(data.action);
+            switch (data.action) {
+                case 'COMPANION_CONNECTED':
+                    this.setState({ searchCompanion: false});
+                    break;
+                case 'NEW_MESSAGE':
+                    this.handleIncomingMessage(data.payload.message);
+                    break;
+                case 'CHAT_CLOSED':
+                    this.setState({ companionLeftModalVisible: true });
+                    break;
+            }
+        };
+    }
 
     onPressCancelSearchButton() {
         this.setState({ cancelSearchDialogModalVisible: true });
@@ -82,8 +78,9 @@ v    }
 
     positiveCancelSearchModalAnswer() {
         this.setState({ cancelSearchDialogModalVisible: false}, () => {
-            console.log(this.roomInfo);
-            socket.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: {uuid: this.roomInfo.payload.uuid} }));
+            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: {uuid: this.roomInfo.payload.uuid} }));
+            SingleSocket.instance.close();
+            SingleSocket.instance = null;
             this.navigation.navigate('TopicsScreen');
         })
     }
@@ -102,7 +99,9 @@ v    }
 
     positiveEndDialogModalAnswer() {
         this.setState({ endDialogModalVisible: false}, () => {
-            socket.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.uuid } }));
+            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid } }));
+            SingleSocket.instance.close();
+            SingleSocket.instance = null;
             this.navigation.navigate('TopicsScreen');
         });
     }
@@ -117,7 +116,9 @@ v    }
 
     chooseTopicAnswer() {
         this.setState({ companionLeftModalVisible: false }, () => {
-            socket.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.uuid } }));
+            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid } }));
+            SingleSocket.instance.close();
+            SingleSocket.instance = null;
             this.navigation.navigate('TopicsScreen')
         });
     }
@@ -137,7 +138,7 @@ v    }
             incoming: false
         });
         this.setState({ messages: messages });
-        socket.send(JSON.stringify({ action: 'MESSAGE', user_data: {message: message, uuid: this.roomInfo.payload.uuid }}));
+        SingleSocket.instance.send(JSON.stringify({ action: 'MESSAGE', user_data: {message: message, uuid: this.roomInfo.payload.uuid }}));
     }
 
     handleIncomingMessage(message) {

@@ -44,7 +44,7 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.subtitle}>Анонимные чаты по интересам</Text>
                 <View style={styles.exampleChat}>
                     <View style={styles.exampleMessage1}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Выбери тму</Text>
+                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Выбери тему</Text>
                     </View>
                     <View style={styles.exampleMessage2}>
                         <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Начни обсуждение с собеседником</Text>
