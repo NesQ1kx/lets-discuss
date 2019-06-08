@@ -6,6 +6,31 @@ export default class HomeScreen extends React.Component {
         super(props);
         this.navigation = this.props.navigation;
         this.navigateToTopicsScreen = this.navigateToTopicsScreen.bind(this);
+        // Web Socket example
+        // var ws = new WebSocket('ws://192.168.1.65:1337');
+        // // ws.send("Hello");
+        // ws.onopen = () => {
+        //     // connection opened
+        //     ws.send(JSON.stringify({
+        //         name: 'something'
+        //     })); // send a message
+        // };
+        //
+        // ws.onmessage = (e) => {
+        //     // a message was received
+        //     console.log(e.data);
+        // };
+        //
+        // ws.onerror = (e) => {
+        //     // an error occurred
+        //     console.log(e.message);
+        // };
+        //
+        // ws.onclose = (e) => {
+        //     // connection closed
+        //     console.log(e.code, e.reason);
+        // };
+
     }
 
     navigateToTopicsScreen() {

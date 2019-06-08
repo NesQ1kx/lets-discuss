@@ -207,7 +207,8 @@ wsServer.on("request", function (request) {
             }
 
         } catch (e) {
-            errorCommand(connection, "Неправильный формат данных");
+            console.log("Parse error");
+            errorCommand(connection, 'Неправильный формат данных');
         }
     });
 
