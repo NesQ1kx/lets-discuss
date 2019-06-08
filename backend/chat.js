@@ -222,6 +222,7 @@ wsServer.on("request", function (request) {
         }
 
         if (roomUuid) {
+            console.log('leave room:' + roomUuid);
             leaveRoomAction(roomUuid);
         }
     });
@@ -327,10 +328,10 @@ function leaveRoomAction(roomUuid) {
         var users = room.connections;
 
         for (var i = 0; i < users.length; i++) {
-            users.splice(i, 1);
-            users.sendUTF(JSON.stringify({
+            users[i].sendUTF(JSON.stringify({
                 action: "CHAT_CLOSED"
-            }))
+            }));
+            users.splice(i, 1);
         }
     }
 }
