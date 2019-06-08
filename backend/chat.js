@@ -214,6 +214,7 @@ wsServer.on("request", function (request) {
 
     // user disconnected
     connection.on("close", function (connection) {
+        console.log("Closed connection!");
         if (userName !== false) {
             console.log((new Date()) + " Peer "
                 + connection.remoteAddress + " disconnected.");
@@ -222,6 +223,7 @@ wsServer.on("request", function (request) {
         }
 
         if (roomUuid) {
+            console.log('leave room:' + roomUuid);
             leaveRoomAction(roomUuid);
         }
     });
@@ -327,10 +329,13 @@ function leaveRoomAction(roomUuid) {
         var users = room.connections;
 
         for (var i = 0; i < users.length; i++) {
-            users.splice(i, 1);
-            users.sendUTF(JSON.stringify({
+            console.log("SHOULD SEND CHAT CLOSED EVENT");
+            users[i].sendUTF(JSON.stringify({
                 action: "CHAT_CLOSED"
-            }))
+            }));
+        }
+        for (var i = 0; i < users.length; i++) {
+            users.splice(i, 1);
         }
     }
 }
