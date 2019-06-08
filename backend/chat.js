@@ -1,92 +1,126 @@
 // http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/
 "use strict";
 
-// Optional. You will see this name in eg. 'ps' or 'top' command
-process.title = 'node-chat';
+// Optional. You will see this name in eg. "ps" or "top" command
+process.title = "node-chat";
 
 var HISTORY_SIZE = 300;
 var CATEGORY_LIST = [
     {
+        id: 0,
         name: "Любовь",
-        id: 0
+        online: 30,
+        forChat: "любовь"
     },
     {
+        id: 1,
         name: "Путешествие",
-        id: 1
+        online: 65,
+        forChat: "путешествие"
     },
     {
+        id: 2,
         name: "Экономика",
-        id: 2
+        online: 65,
+        forChat: "экономику",
     },
     {
         name: "Музыка",
+        online: 65,
+        forChat: "музыку",
         id: 3
     },
     {
         name: "Животные",
+        online: 65,
+        forChat: "животных",
         id: 4
     },
     {
         name: "Здоровье",
+        online: 65,
+        forChat: "здоровье",
         id: 5
     },
     {
         name: "Игры",
+        online: 65,
+        forChat: "игры",
         id: 6
     },
     {
-        name: "Экономика",
+        name: "Погода",
+        online: 65,
+        forChat: "погоду",
         id: 7
     },
     {
         name: "Экология",
+        online: 65,
+        forChat: "экологию",
         id: 8
     },
     {
-        name: "Вечеринки",
+        name: "Вечеринка",
+        online: 65,
+        forChat: "вечеринку",
         id: 9
     },
     {
         name: "Общение",
+        online: 65,
+        forChat: "общение",
         id: 10
     },
     {
         name: "Напитки",
+        online: 65,
+        forChat: "напитки",
         id: 11
     },
     {
-        name: "Искусство",
+        name: "Икусство",
+        online: 65,
+        forChat: "искусство",
         id: 12
     },
     {
         name: "Образ жизни",
+        online: 65,
+        forChat: "образ жизни",
         id: 13
     },
     {
         name: "Спорт",
+        online: 65,
+        forChat: "спорт",
         id: 14
     },
     {
         name: "Образование",
+        online: 65,
+        forChat: "образование",
         id: 15
     },
     {
         name: "Программирование",
+        online: 65,
+        forChat: "программирование",
         id: 16
     },
 ];
 
 
-// Port where we'll run the websocket server
+// Port where we"ll run the websocket server
 var webSocketsServerPort = 1337;
 
 // websocket and http servers
-var webSocketServer = require('websocket').server;
-var http = require('http');
-var express = require('express');
+var webSocketServer = require("websocket").server;
+var http = require("http");
+var express = require("express");
 var app = express();
-var uuidv1 = require('uuid/v1');
-// var commands = require('./services/commands');
+var uuidv1 = require("uuid/v1");
+// var commands = require("./services/commands");
 
 /**
  * Global variables
@@ -98,7 +132,7 @@ var connections = [];
 //chat rooms list
 /*
  {
-    uuid: '',
+    uuid: "",
     themeId : <Number>,
     connections: []
  }
@@ -109,7 +143,7 @@ var chatRooms = [];
  * HTTP server
  */
 var server = http.createServer(function (request, response) {
-    // Not important for us. We're writing WebSocket server, not HTTP server
+    // Not important for us. We"re writing WebSocket server, not HTTP server
 });
 server.listen(webSocketsServerPort, function () {
     console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
@@ -127,57 +161,58 @@ var wsServer = new webSocketServer({
 
 // This callback function is called every time someone
 // tries to connect to the WebSocket server
-wsServer.on('request', function (request) {
-    console.log((new Date()) + ' Connection from origin ' + request.origin + '.');
+wsServer.on("request", function (request) {
+    console.log((new Date()) + " Connection from origin " + request.origin + ".");
 
-    // accept connection - you should check 'request.origin' to make sure that
+    // accept connection - you should check "request.origin" to make sure that
     // client is connecting from your website
     // (http://en.wikipedia.org/wiki/Same_origin_policy)
     var connection = request.accept(null, request.origin);
-    // we need to know client index to remove them on 'close' event
+    // we need to know client index to remove them on "close" event
     var index = connections.push(connection) - 1;
     var userName = false;
     var roomUuid = false;
 
-    console.log((new Date()) + ' Connection accepted.');
+    console.log((new Date()) + " Connection accepted.");
 
     // user sent some message
-    connection.on('message', function (message) {
+    connection.on("message", function (message) {
         try {
-            var messageObject = JSON.parse(message);
-            if (!messageObject.hasOwnProperty('action') && !messageObject.hasOwnProperty('user_data')) {
-                errorCommand(connection, 'Неправильный формат данных');
+            var messageObject = JSON.parse(message.utf8Data);
+            console.log(messageObject);
+            if (!messageObject.hasOwnProperty("action") && !messageObject.hasOwnProperty("user_data")) {
+                errorCommand(connection, "Неправильный формат данных");
             }
 
-            var frontendCommand = messageObject['action'];
-            var userData = messageObject['user_data'];
+            var frontendCommand = messageObject["action"];
+            var userData = messageObject["user_data"];
 
             switch (frontendCommand) {
-                case 'LEAVE_ROOM':
-                    if (!userData.hasOwnProperty('uuid')) errorCommand(connection, 'Не предоставлен номер комнаты');
+                case "LEAVE_ROOM":
+                    if (!userData.hasOwnProperty("uuid")) errorCommand(connection, "Не предоставлен номер комнаты");
                     leaveRoomAction(userData.uuid);
                     roomUuid = false;
                     break;
 
-                case 'CONNECT':
+                case "CONNECT":
                     roomUuid = connectToRoom(connection, userData);
                     break;
 
-                case 'MESSAGE':
+                case "MESSAGE":
                     sendMessage(connection, userData);
                     break;
 
                 default:
-                    errorCommand(connection, 'Неизвестная команда')
+                    errorCommand(connection, "Неизвестная команда")
             }
 
         } catch (e) {
-            errorCommand(connection, 'Неправильный формат данных');
+            errorCommand(connection, "Неправильный формат данных");
         }
     });
 
     // user disconnected
-    connection.on('close', function (connection) {
+    connection.on("close", function (connection) {
         if (userName !== false) {
             console.log((new Date()) + " Peer "
                 + connection.remoteAddress + " disconnected.");
@@ -197,7 +232,7 @@ wsServer.on('request', function (request) {
  */
 
 function errorCommand(socketConnection, errorMessage) {
-    errorMessage = errorMessage || 'Что-то пошло не так';
+    errorMessage = errorMessage || "Что-то пошло не так";
     socketConnection.sendUTF(JSON.stringify({
         error: errorMessage
     }));
@@ -216,8 +251,8 @@ function getReadyRoomByThemeId(themeId) {
 }
 
 function sendMessage(websocketConnection, userData) {
-    if (!userData.hasOwnProperty('message') || !userData.hasOwnProperty('uuid')) {
-        errorCommand(websocketConnection, 'Мало данных');
+    if (!userData.hasOwnProperty("message") || !userData.hasOwnProperty("uuid")) {
+        errorCommand(websocketConnection, "Мало данных");
     }
 
     var message = userData.message;
@@ -226,24 +261,25 @@ function sendMessage(websocketConnection, userData) {
     var room = getRoomByUuid(uuid);
 
     if (!room) {
-        errorCommand(websocketConnection, 'Бля, что-то пошло не так');
+        errorCommand(websocketConnection, "Бля, что-то пошло не так");
     }
 
     room.connections.forEach(function (item) {
       if (item !== websocketConnection)  { // TODO: вот тут бля обязательно надо проверить, можно ли так сравнивать 2 разных конекшена, иначе себе будут приходить свои же сообщения
           item.sendUTF(JSON.stringify({
-              action: 'NEW_MESSAGE',
+              action: "NEW_MESSAGE",
               payload: {
                   message: message
               }
-          }))
+          }));
+          console.log('send message');
       }
     })
 }
 
 function connectToRoom(websocketConnection, userData) {
-    if (!userData.hasOwnProperty('theme_id')) {
-        errorCommand(websocketConnection, 'Не предоставлена id темы')
+    if (!userData.hasOwnProperty("theme_id")) {
+        errorCommand(websocketConnection, "Не предоставлена id темы")
     }
 
     var themeId = userData.theme_id;
@@ -253,16 +289,15 @@ function connectToRoom(websocketConnection, userData) {
         var companion = readyRoom.connections[0];
         readyRoom.connections.push(websocketConnection);
         websocketConnection.sendUTF(JSON.stringify({
-            action: 'CHAT_CONNECTED',
+            action: "CHAT_CONNECTED",
             payload: {
                 uuid: readyRoom.uuid
             }
         }));
-
+        console.log('chat connected');
         companion.sendUTF(JSON.stringify({
-            action: 'COMPANION_CONNECTED'
+            action: "COMPANION_CONNECTED"
         }));
-
         return readyRoom.uuid;
     }
 
@@ -274,12 +309,13 @@ function connectToRoom(websocketConnection, userData) {
     chatRooms.push(newRoom);
 
     websocketConnection.sendUTF(JSON.stringify({
-        action: 'ROOM_CREATED',
+        action: "ROOM_CREATED",
         payload: {
             uuid: newRoom.uuid,
             theme_id: themeId
         }
     }));
+    console.log('room created');
 
     return newRoom.uuid
 }
@@ -290,9 +326,9 @@ function leaveRoomAction(roomUuid) {
         var users = room.connections;
 
         for (var i = 0; i < users.length; i++) {
-            users.splice(index, 1);
+            users.splice(i, 1);
             users.sendUTF(JSON.stringify({
-                action: 'CHAT_CLOSED'
+                action: "CHAT_CLOSED"
             }))
         }
     }
@@ -301,16 +337,16 @@ function leaveRoomAction(roomUuid) {
 /**
  * REST API MODULE
  */
-app.get('/', function (req, res) {
-    res.send('Hi from awesome project. Developers: ' +
-        'Jho00,' +
-        'Нескук');
+app.get("/", function (req, res) {
+    res.send("Hi from awesome project. Developers: " +
+        "Jho00," +
+        "Нескук");
 });
 
-app.get('/getCategories', function (req, res) {
+app.get("/getCategories", function (req, res) {
     res.send(JSON.stringify(CATEGORY_LIST));
 });
 
 app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+    console.log("Example app listening on port 3000!");
 });
