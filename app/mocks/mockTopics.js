@@ -1,111 +1,70 @@
 export const MOCK_TOPICS = [
     {
-        name: 'Спорт',
-        image: require('../assets/TopicsImages/sport.png'),
-        online: 65,
-        forChat: 'спорт'
+        id: 0,
+        image: require("../assets/TopicsImages/love.png"),
     },
     {
-        name: 'Любовь',
-        image: require('../assets/TopicsImages/love.png'),
-        online: 30,
-        forChat: 'любовь'
+        id: 1,
+        image: require("../assets/TopicsImages/travel.png"),
     },
     {
-        name: 'Путешествие',
-        image: require('../assets/TopicsImages/travel.png'),
-        online: 65,
-        forChat: 'путешествие'
+        id: 2,
+        image: require("../assets/TopicsImages/economic.png"),
     },
     {
-        name: 'Программирование',
-        image: require('../assets/TopicsImages/programming.png'),
-        online: 65,
-        forChat: 'программирование'
+        image: require("../assets/TopicsImages/music.png"),
+        id: 3
     },
     {
-        name: 'Образование',
-        image: require('../assets/TopicsImages/education.png'),
-        online: 65,
-        forChat: 'образование',
+        image: require("../assets/TopicsImages/animals.png"),
+        id: 4
     },
     {
-        name: 'Экономика',
-        image: require('../assets/TopicsImages/education.png'),
-        online: 65,
-        forChat: 'экономику',
+        image: require("../assets/TopicsImages/health.png"),
+        id: 5
     },
     {
-        name: 'Музыка',
-        image: require('../assets/TopicsImages/music.png'),
-        online: 65,
-        forChat: 'музыку',
+        image: require("../assets/TopicsImages/games.png"),
+        id: 6
     },
     {
-        name: 'Животные',
-        image: require('../assets/TopicsImages/animals.png'),
-        online: 65,
-        forChat: 'животных',
+        image: require("../assets/TopicsImages/weather.png"),
+        id: 7
     },
     {
-        name: 'Здоровье',
-        image: require('../assets/TopicsImages/health.png'),
-        online: 65,
-        forChat: 'здоровье',
+        image: require("../assets/TopicsImages/ecology.png"),
+        id: 8
     },
     {
-        name: 'Игры',
-        image: require('../assets/TopicsImages/games.png'),
-        online: 65,
-        forChat: 'игры',
+        image: require("../assets/TopicsImages/party.png"),
+        id: 9
     },
     {
-        name: 'Экономика',
-        image: require('../assets/TopicsImages/economic.png'),
-        online: 65,
-        forChat: 'экономику',
+        image: require("../assets/TopicsImages/communication.png"),
+        id: 10
     },
     {
-        name: 'Экология',
-        image: require('../assets/TopicsImages/ecology.png'),
-        online: 65,
-        forChat: 'экологию',
+        image: require("../assets/TopicsImages/drinks.png"),
+        id: 11
     },
     {
-        name: 'Вечеринка',
-        image: require('../assets/TopicsImages/party.png'),
-        online: 65,
-        forChat: 'вечеринку',
+        image: require("../assets/TopicsImages/art.png"),
+        id: 12
     },
     {
-        name: 'Общение',
-        image: require('../assets/TopicsImages/communication.png'),
-        online: 65,
-        forChat: 'общение',
+        image: require("../assets/TopicsImages/life_style.png"),
+        id: 13
     },
     {
-        name: 'Напитки',
-        image: require('../assets/TopicsImages/drinks.png'),
-        online: 65,
-        forChat: 'напитки',
+        image: require("../assets/TopicsImages/sport.png"),
+        id: 14
     },
     {
-        name: 'Погода',
-        image: require('../assets/TopicsImages/weather.png'),
-        online: 65,
-        forChat: 'погоду',
+        image: require("../assets/TopicsImages/education.png"),
+        id: 15
     },
     {
-        name: 'Икусство',
-        image: require('../assets/TopicsImages/art.png'),
-        online: 65,
-        forChat: 'искусство',
+        image: require("../assets/TopicsImages/programming.png"),
+        id: 16
     },
-    {
-        name: 'Образ жизни',
-        image: require('../assets/TopicsImages/life_style.png'),
-        online: 65,
-        forChat: 'образ жизни',
-    },
-
 ];

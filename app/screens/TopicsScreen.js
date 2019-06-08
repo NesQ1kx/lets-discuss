@@ -1,26 +1,56 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView} from 'react-native';
-import {MOCK_TOPICS} from "../mocks/mockTopics";
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
+import { MOCK_TOPICS } from "../mocks/mockTopics";
 import TopicItem from "../components/TopicItem";
+import { httpService } from "../services/httpService";
+
+const socket = new WebSocket('ws://192.168.157.27:1337');
+
 
 export default class TopicsScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { categories: [], dataLoaded: false };
+        this.navigation = this.props.navigation.getParam('navigation');
+        this.handleTopicTouch = this.handleTopicTouch.bind(this);
     }
+
+    componentDidMount() {
+        httpService.get('getCategories').then(data => this.setState({ categories: data.data, dataLoaded: true }));
+    }
+
+    handleTopicTouch(item) {
+        console.log('call');
+        socket.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: item.id}}));
+        socket.onmessage = ev => {
+            const roomInfo = JSON.parse(ev.data);
+            this.navigation.navigate('ChatRoomScreen', { item: item, roomInfo: roomInfo });
+        }
+    }
+
     render() {
         return (
             <View>
                 <View style={styles.header}>
                     <Text style={{color: '#ffffff', fontSize: 16}}>Выбери тему для обсуждения</Text>
                 </View>
-                <ScrollView>
-                    <View style={styles.container}>
-                        {MOCK_TOPICS.map((item, index) => <TopicItem
-                                                                    key={index}
-                                                                    item={item}
-                                                                    navigation={this.props.navigation}/>)}
+                {!this.state.dataLoaded && (
+                    <View style={{marginTop: 300}}>
+                        <ActivityIndicator size="large" color="#0000ff" />
                     </View>
-                </ScrollView>
+                )}
+
+                {this.state.dataLoaded && (
+                    <ScrollView>
+                        <View style={styles.container}>
+                            {this.state.categories.map((item, index) => <TopicItem
+                                key={index}
+                                item={item}
+                                navigation={this.props.navigation}
+                                onTouch={this.handleTopicTouch}/>)}
+                        </View>
+                    </ScrollView>
+                )}
             </View>
         );
     }
@@ -36,12 +66,12 @@ const styles = StyleSheet.create({
         left: 0,
         width: '100%',
         height: 60,
-        backgroundColor: '#3016B0',
+        backgroundColor: '#1240AB',
         marginTop: 20,
         zIndex: 10
     },
     container: {
         flexDirection: 'column',
         marginTop: 80,
-    }
+    },
 });

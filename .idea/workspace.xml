@@ -2,20 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="275c4e61-88b1-42fd-bd82-40fd7342df15" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/components/CancelDialogSearchModal.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/CancelSearchButton.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/EndDialogButton.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/NextDialogButton.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/SearchCompanion.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/components/TopicItem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/mocks/mockTopics.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/ChatRoomScreen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/screens/TopicsScreen.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/CompanionLeftModal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/IncomingMessage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/OutgoingMessage.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/components/UserInput.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/SocketSingletone.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/services/httpService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/next_dialog.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/next_dialog.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/CancelDialogSearchModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/CancelDialogSearchModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/EndDialogModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/EndDialogModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/NextDialogModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/NextDialogModal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/TopicItem.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/TopicItem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/mocks/mockTopics.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/mocks/mockTopics.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/ChatRoomScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/ChatRoomScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/HomeScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/HomeScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/TopicsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/TopicsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/chat.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,34 +34,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/screens/TopicsScreen.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="44" column="22" lean-forward="true" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/TopicItem.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/screens/ChatRoomScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="66" column="67" lean-forward="true" selection-start-line="66" selection-start-column="67" selection-end-line="66" selection-end-column="67" />
+            <state relative-caret-position="-361">
+              <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -65,34 +46,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/EndDialogButton.js">
+        <entry file="file://$PROJECT_DIR$/app/services/SocketSingletone.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/CancelDialogSearchModal.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-342">
-              <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="19">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/components/EndDialogModal.js">
+        <entry file="file://$PROJECT_DIR$/app/screens/HomeScreen.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="6" column="56" selection-start-line="6" selection-start-column="56" selection-end-line="6" selection-end-column="56" />
+            <state relative-caret-position="285">
+              <caret line="15" column="16" lean-forward="true" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -101,13 +67,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/components/NextDialogModal.js">
+        <entry file="file://$PROJECT_DIR$/app/screens/TopicsScreen.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="133">
-              <caret line="7" column="103" selection-start-line="7" selection-start-column="103" selection-end-line="7" selection-end-column="103" />
+              <caret line="13" column="68" selection-start-line="13" selection-start-column="68" selection-end-line="13" selection-end-column="68" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/backend/chat.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="178" column="40" lean-forward="true" selection-start-line="178" selection-start-column="40" selection-end-line="178" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -131,6 +106,20 @@
       <find>onNextDialogModalVisible</find>
       <find>onEndDialogModalVisible</find>
       <find>onPressCancelDialogButton</find>
+      <find>negativeModalAnswer</find>
+      <find>nCancelDialogModalVisible</find>
+      <find>\n</find>
+      <find>renderItem</find>
+      <find>'</find>
+      <find>re</find>
+      <find>require(</find>
+      <find>COMPA</find>
+      <find>handleMessage</find>
+      <find>COMPANION_CONNECTED</find>
+      <find>wss</find>
+      <find>consol</find>
+      <find>CHAT</find>
+      <find>this.socket</find>
     </findStrings>
     <replaceStrings>
       <replace>searchCompanion</replace>
@@ -138,8 +127,12 @@
       <replace>onEndDialogModal</replace>
       <replace>onEndDialogModalVisible</replace>
       <replace>nextDialogModalVisible</replace>
-      <replace>endDialogModalVisible</replace>
       <replace>onPressEndDialogButton</replace>
+      <replace>negativeCancelSearchModalAnswer</replace>
+      <replace>endDialogModalVisible</replace>
+      <replace>&quot;</replace>
+      <replace>handleOutgoingMessage</replace>
+      <replace>socket</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -152,19 +145,29 @@
         <option value="$PROJECT_DIR$/app/Screens/HomeScreen.js" />
         <option value="$PROJECT_DIR$/app/Screens/TopicsScreen.js" />
         <option value="$PROJECT_DIR$/app/App.js" />
-        <option value="$PROJECT_DIR$/app/screens/HomeScreen.js" />
-        <option value="$PROJECT_DIR$/app/components/TopicItem.js" />
-        <option value="$PROJECT_DIR$/app/mocks/mockTopics.js" />
         <option value="$PROJECT_DIR$/app/components/SearchCompanion.js" />
-        <option value="$PROJECT_DIR$/app/screens/TopicsScreen.js" />
         <option value="$PROJECT_DIR$/app/components/OnCancelModal.js" />
         <option value="$PROJECT_DIR$/app/components/CancelSearchButton.js" />
         <option value="$PROJECT_DIR$/app/components/NextDialogButton.js" />
         <option value="$PROJECT_DIR$/app/components/CancelDialogButton.js" />
-        <option value="$PROJECT_DIR$/app/components/NextDialogModal.js" />
         <option value="$PROJECT_DIR$/app/components/EndDialogButton.js" />
-        <option value="$PROJECT_DIR$/app/screens/ChatRoomScreen.js" />
+        <option value="$PROJECT_DIR$/app/components/CompanionLeft.js" />
+        <option value="$PROJECT_DIR$/app/components/OutGoingMessage.js" />
+        <option value="$PROJECT_DIR$/app/components/NextDialogModal.js" />
+        <option value="$PROJECT_DIR$/app/components/CompanionLeftModal.js" />
         <option value="$PROJECT_DIR$/app/components/EndDialogModal.js" />
+        <option value="$PROJECT_DIR$/app/components/CancelDialogSearchModal.js" />
+        <option value="$PROJECT_DIR$/app/components/UserInput.js" />
+        <option value="$PROJECT_DIR$/app/components/IncomingMessage.js" />
+        <option value="$PROJECT_DIR$/app/components/OutgoingMessage.js" />
+        <option value="$PROJECT_DIR$/app/mocks/mockTopics.js" />
+        <option value="$PROJECT_DIR$/app/services/httpService.js" />
+        <option value="$PROJECT_DIR$/app/services/SocketSingletone.js" />
+        <option value="$PROJECT_DIR$/app/components/TopicItem.js" />
+        <option value="$PROJECT_DIR$/app/screens/ChatRoomScreen.js" />
+        <option value="$PROJECT_DIR$/app/screens/TopicsScreen.js" />
+        <option value="$PROJECT_DIR$/backend/chat.js" />
+        <option value="$PROJECT_DIR$/app/screens/HomeScreen.js" />
       </list>
     </option>
   </component>
@@ -179,6 +182,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="lets-discuss" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/Projects/lets-discuss" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -195,25 +209,23 @@
               <item name="lets-discuss" type="b2602c69:ProjectViewProjectNode" />
               <item name="lets-discuss" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lets-discuss" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lets-discuss" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="mocks" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="lets-discuss" type="b2602c69:ProjectViewProjectNode" />
-              <item name="lets-discuss" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lets-discuss" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lets-discuss" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="lets-discuss" type="b2602c69:ProjectViewProjectNode" />
+              <item name="lets-discuss" type="462c0819:PsiDirectoryNode" />
+              <item name="backend" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -223,6 +235,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -252,30 +265,37 @@
       <workItem from="1558979067347" duration="5097000" />
       <workItem from="1559062907445" duration="104000" />
       <workItem from="1559313226251" duration="15164000" />
+      <workItem from="1559579224725" duration="9298000" />
+      <workItem from="1559661651279" duration="6725000" />
+      <workItem from="1559824026521" duration="16988000" />
+      <workItem from="1559917913206" duration="685000" />
+      <workItem from="1559918703811" duration="7332000" />
+      <workItem from="1559973943548" duration="920000" />
+      <workItem from="1559975086830" duration="3212000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30971000" />
+    <option name="totallyTimeSpent" value="76838000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1533" height="875" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16953643" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16953643" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.329235" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.24590164" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.28688523" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -302,9 +322,6 @@
     <entry file="file://$PROJECT_DIR$/app/assets/logo.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/package.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/assets/icon.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -327,83 +344,6 @@
     <entry file="file://$PROJECT_DIR$/app/assets/cancel_search.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/mocks/mockTopics.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="93" column="15" lean-forward="true" selection-start-line="93" selection-start-column="15" selection-end-line="93" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/SearchCompanion.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="16" selection-start-line="16" selection-end-line="18" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/TopicItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/screens/TopicsScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="44" column="22" lean-forward="true" selection-start-line="44" selection-start-column="22" selection-end-line="44" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/screens/HomeScreen.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1121">
-          <caret line="78" column="8" lean-forward="true" selection-start-line="78" selection-start-column="8" selection-end-line="80" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/CancelSearchButton.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="373">
-          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/NextDialogModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="103" selection-start-line="7" selection-start-column="103" selection-end-line="7" selection-end-column="103" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/CancelDialogSearchModal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-342">
-          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/components/NextDialogButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -414,20 +354,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/screens/ChatRoomScreen.js">
+    <entry file="file://$PROJECT_DIR$/app/components/EndDialogButton.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="66" column="67" lean-forward="true" selection-start-line="66" selection-start-column="67" selection-end-line="66" selection-end-column="67" />
+        <state relative-caret-position="38">
+          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/components/EndDialogButton.js">
+    <entry file="file://$PROJECT_DIR$/app/components/SearchCompanion.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        <state relative-caret-position="209">
+          <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/CompanionLeft.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/CancelSearchButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="7" column="70" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="70" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/node_modules/react-native/Libraries/react-native/react-native-implementation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/node_modules/react-native/Libraries/Lists/FlatList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-46">
+          <caret line="43" column="21" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/NextDialogModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="31" selection-end-column="25" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
@@ -436,8 +420,158 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/components/EndDialogModal.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/CompanionLeftModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/CancelDialogSearchModal.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/UserInput.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-178">
+          <caret line="1" column="69" selection-start-line="1" selection-start-column="69" selection-end-line="1" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/OutgoingMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/services/commands.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/frontend.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-140" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/api.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/package-lock.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-306">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/node_modules/axios/index.d.ts">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/IncomingMessage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/mocks/mockTopics.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="5" lean-forward="true" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="16373" column="4" selection-start-line="16373" selection-start-column="4" selection-end-line="16373" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/httpService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/components/TopicItem.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
-          <caret line="6" column="56" selection-start-line="6" selection-start-column="56" selection-end-line="6" selection-end-column="56" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/services/SocketSingletone.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/backend/chat.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="178" column="40" lean-forward="true" selection-start-line="178" selection-start-column="40" selection-end-line="178" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/screens/TopicsScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="13" column="68" selection-start-line="13" selection-start-column="68" selection-end-line="13" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/screens/ChatRoomScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-361">
+          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/screens/HomeScreen.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="16" lean-forward="true" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="16" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>

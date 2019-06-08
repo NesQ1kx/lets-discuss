@@ -1,26 +1,31 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {MOCK_TOPICS} from "../mocks/mockTopics";
+//import { socket } from "../services/SocketSingletone";
+
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.navigation = this.props.navigation;
         this.navigateToChatRoom = this.navigateToChatRoom.bind(this);
+
     }
 
     navigateToChatRoom() {
-        this.navigation.navigate('ChatRoomScreen', { item: this.props.item });
+        this.props.onTouch(this.props.item);
     }
 
     render() {
-        const {name, image, online} = this.props.item;
+        const {id, name, online} = this.props.item;
+        const item = MOCK_TOPICS.find(item => item.id === id);
         return (
             <TouchableHighlight onPress={this.navigateToChatRoom}>
                 <View style={styles.container}>
-                    <Image style={styles.image} source={image} />
+                    <Image style={styles.image} source={item.image} />
                     <View style={styles.mainInfo}>
                         <View style={styles.name}>
-                            <Text style={{ color: '#190773', fontSize: 18 }}>{name}</Text>
+                            <Text style={{ color: '#06266F', fontSize: 18 }}>{name}</Text>
                         </View>
                         <View style={styles.online}>
                             <Text style={{ color: '#828282' }}>online {online}</Text>
