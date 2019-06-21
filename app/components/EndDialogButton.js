@@ -1,14 +1,14 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const EndDialogButton = (props) => {
     return (
-        <TouchableHighlight onPress={props.endDialog}>
+        <TouchableOpacity onPress={props.endDialog}>
             <View style={styles.container}>
                 <Image source={require('../assets/cancel_dialog.png')}/>
                 <Text style={styles.text}>завершить</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
     )
 };

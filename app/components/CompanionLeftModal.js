@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const CompanionLeftModal = (props) => {
     return (
@@ -7,18 +7,18 @@ export const CompanionLeftModal = (props) => {
             <Text style={styles.header}>Собеседник покинул беседу</Text>
             <Text style={styles.tip}>Собеседник поуинул беседу. Искать нового собеседника или перейти к выбору темы?</Text>
             <View style={styles.buttonContainer}>
-                <TouchableHighlight onPress={props.newCompanion}>
+                <TouchableOpacity onPress={props.newCompanion}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Новый</Text>
                         <Text style={styles.buttonText}>собеседник</Text>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={props.chooseTopic}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.chooseTopic}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Выбрать</Text>
                         <Text style={styles.buttonText}>тему</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         </View>
     )

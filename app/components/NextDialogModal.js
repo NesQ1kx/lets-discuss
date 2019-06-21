@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const NextDialogModal = (props) => {
     return (
@@ -7,16 +7,16 @@ export const NextDialogModal = (props) => {
             <Text style={styles.header}>Найти нового собеседника</Text>
             <Text style={styles.tip}>Вы уверены, что хотите завершить беседу и найти нового собеседника</Text>
             <View style={styles.buttonContainer}>
-                <TouchableHighlight onPress={props.positiveAnswer}>
+                <TouchableOpacity onPress={props.positiveAnswer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Да</Text>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={props.negativeAnswer}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.negativeAnswer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Отмена</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         </View>
     )

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {MOCK_TOPICS} from "../mocks/mockTopics";
 //import { socket } from "../services/SocketSingletone";
 
@@ -20,7 +20,7 @@ export default class App extends React.Component {
         const {id, name, online} = this.props.item;
         const item = MOCK_TOPICS.find(item => item.id === id);
         return (
-            <TouchableHighlight onPress={this.navigateToChatRoom}>
+            <TouchableOpacity onPress={this.navigateToChatRoom}>
                 <View style={styles.container}>
                     <Image style={styles.image} source={item.image} />
                     <View style={styles.mainInfo}>
@@ -32,7 +32,7 @@ export default class App extends React.Component {
                         </View>
                     </View>
                 </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
         );
     }
 }

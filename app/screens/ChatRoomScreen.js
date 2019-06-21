@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, KeyboardAvoidingView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Image, KeyboardAvoidingView, FlatList } from 'react-native';
 import { SearchCompanion } from "../components/SearchCompanion";
 import { CancelSearchButton } from "../components/CancelSearchButton";
 import { CancelDialogSearchModal } from "../components/CancelDialogSearchModal";
@@ -13,6 +13,7 @@ import UserInput from "../components/UserInput";
 import {OutgoingMessage} from "../components/OutgoingMessage";
 import {IncomingMessage} from "../components/IncomingMessage";
 import SingleSocket from "../services/SocketSingletone";
+import {CompanionFound} from "../components/CompanionFound";
 
 
 export default class ChatRoomScreen extends React.Component {
@@ -22,6 +23,7 @@ export default class ChatRoomScreen extends React.Component {
         this.item = this.navigation.getParam('item');
         this.roomInfo = this.navigation.getParam('roomInfo');
         this.state = { searchCompanion: true,
+                       companionFound: false,
                        cancelSearchDialogModalVisible: false,
                        nextDialogModalVisible: false,
                        endDialogModalVisible: false,
@@ -52,7 +54,10 @@ export default class ChatRoomScreen extends React.Component {
             console.log(data.action);
             switch (data.action) {
                 case 'COMPANION_CONNECTED':
-                    this.setState({ searchCompanion: false});
+                    this.setState({ searchCompanion: false, companionFound: true});
+                    setTimeout(() => {
+                        this.setState({ companionFound: false })
+                    }, 1500);
                     break;
                 case 'NEW_MESSAGE':
                     this.handleIncomingMessage(data.payload.message);
@@ -90,7 +95,11 @@ export default class ChatRoomScreen extends React.Component {
     }
 
     positiveNextDialogModalAnswer() {
-        this.setState({ nextDialogModalVisible: false }, () => this.setState( { searchCompanion: true }));
+        this.setState({ nextDialogModalVisible: false });
+        SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: {uuid: this.roomInfo.payload.uuid} }));
+        SingleSocket.instance.close();
+        SingleSocket.instance = null;
+        SingleSocket.instance.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: this.item.id}}))
     }
 
     negativeNextDialogModalAnswer() {
@@ -111,7 +120,10 @@ export default class ChatRoomScreen extends React.Component {
     }
 
     newCompanionAnswer() {
-        this.setState({ companionLeftModalVisible: false}, () => this.setState({ searchCompanion: true }));
+        this.setState({ companionLeftModalVisible: false});
+        SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid }}));
+        SingleSocket.instance.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: this.item.id}}));
+        this.setState({ searchCompanion: true});
     }
 
     chooseTopicAnswer() {
@@ -150,7 +162,7 @@ export default class ChatRoomScreen extends React.Component {
         this.setState({ messages: messages });
     }
 
-    _keyExtractor = (item, index) => index;
+    _keyExtractor = (item, index) => index.toString();
 
     render() {
         return(
@@ -163,7 +175,7 @@ export default class ChatRoomScreen extends React.Component {
                         {!this.state.searchCompanion && <EndDialogButton endDialog={this.onPressEndDialogButton}/>}
                     </View>
                 </View>
-
+                {this.state.companionFound && <CompanionFound />}
                 {this.state.searchCompanion && <SearchCompanion />}
                 {this.state.companionLeftModalVisible && <CompanionLeft />}
                 {this.state.cancelSearchDialogModalVisible && <CancelDialogSearchModal positiveAnswer={this.positiveCancelSearchModalAnswer}
@@ -174,12 +186,13 @@ export default class ChatRoomScreen extends React.Component {
                                                                      negativeAnswer={this.negativeEndDialogModalAnswer}/>}
                 {this.state.companionLeftModalVisible && <CompanionLeftModal newCompanion={this.newCompanionAnswer}
                                                                              chooseTopic={this.chooseTopicAnswer}/>}
-                {this.state.searchCompanion &&
-                <View style={styles.searchIndicator}>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                </View>
+                {this.state.searchCompanion && !this.state.cancelSearchDialogModalVisible &&
+                (<View style={styles.searchIndicator}>
+                    <Image style={{width: 100, height: 100, left: '50%', marginLeft: -50}}
+                        source={require("../assets/loading_spiner.gif")}/>
+                </View>)
                 }
-                {!this.state.searchCompanion && (
+                {!this.state.searchCompanion && !this.state.companionLeftModalVisible && !this.state.endDialogModalVisible && (
                     <FlatList
                         style={{flex: 1}}
                         renderItem={this.renderItem}
@@ -188,7 +201,7 @@ export default class ChatRoomScreen extends React.Component {
                         inverted
                     />
                 )}
-                {!this.state.searchCompanion && (
+                {!this.state.searchCompanion && !this.state.companionLeftModalVisible && !this.state.endDialogModalVisible && (
                     <KeyboardAvoidingView behavior="padding">
                         <UserInput onSendMessage={this.handleOutgoingMessage}/>
                     </KeyboardAvoidingView>
@@ -204,9 +217,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        height: 60,
-        backgroundColor: '#3016B0',
-        marginTop: 20,
+        height: 80,
+        backgroundColor: '#1240AB',
         zIndex: 10
     },
     buttonContainer: {

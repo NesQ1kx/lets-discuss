@@ -12,7 +12,7 @@ class SingleSocket {
 
     static get instance() {
         if (!this[singleSocket]) {
-            this[singleSocket] = new WebSocket('ws://192.168.1.65:1337');
+            this[singleSocket] = new WebSocket('ws://192.168.157.27:1337');
         }
 
         return this[singleSocket];

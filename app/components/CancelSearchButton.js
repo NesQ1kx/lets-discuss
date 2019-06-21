@@ -1,14 +1,14 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const CancelSearchButton = (props) => {
     return (
-        <TouchableHighlight onPress={props.cancelSearch}>
+        <TouchableOpacity onPress={props.cancelSearch}>
             <View style={styles.container}>
                 <Image source={require('../assets/cancel_search.png')}/>
                 <Text style={styles.text}>отменить</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
     )
 };

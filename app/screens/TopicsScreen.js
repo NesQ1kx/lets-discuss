@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Image} from 'react-native';
 import TopicItem from "../components/TopicItem";
 import { httpService } from "../services/httpService";
 import SingleSocket from "../services/SocketSingletone";
@@ -37,7 +37,8 @@ export default class TopicsScreen extends React.Component {
                 </View>
                 {!this.state.dataLoaded && (
                     <View style={{marginTop: 300}}>
-                        <ActivityIndicator size="large" color="#0000ff" />
+                        <Image style={{width: 100, height: 100, left: '50%', marginLeft: -50}}
+                               source={require("../assets/loading_spiner.gif")}/>
                     </View>
                 )}
 
@@ -66,13 +67,17 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
         width: '100%',
-        height: 60,
+        height: 80,
         backgroundColor: '#1240AB',
-        marginTop: 20,
         zIndex: 10
     },
     container: {
         flexDirection: 'column',
         marginTop: 80,
+    },
+    searchIndicator: {
+        flex: 1,
+        top: '25%',
+        zIndex: -1
     },
 });

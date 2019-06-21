@@ -1,14 +1,14 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const NextDialogButton = (props) => {
     return (
-        <TouchableHighlight onPress={props.nextDialog}>
+        <TouchableOpacity onPress={props.nextDialog}>
             <View style={styles.container}>
                 <Image source={require('../assets/next_dialog.png')}/>
                 <Text style={styles.text}>следующий</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
     )
 };

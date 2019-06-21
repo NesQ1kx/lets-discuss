@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 export const CancelDialogSearchModal = (props) => {
     return (
@@ -7,16 +7,16 @@ export const CancelDialogSearchModal = (props) => {
             <Text style={styles.header}>Отменить поиск</Text>
             <Text style={styles.tip}>Вы уверены, что хотите отменить поиск собеседника и перейти к выбору тему?</Text>
             <View style={styles.buttonContainer}>
-                <TouchableHighlight onPress={props.positiveAnswer}>
+                <TouchableOpacity onPress={props.positiveAnswer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Да</Text>
                     </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={props.negativeAnswer}>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={props.negativeAnswer}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Отмена</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         </View>
     )

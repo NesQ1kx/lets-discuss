@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
@@ -54,16 +54,16 @@ export default class HomeScreen extends React.Component {
                     </View>
                 </View>
                 <View style={styles.imageContainer}>
-                    <Image style={styles.image} source={require('../assets/logo.png')} />
+                    <Image style={styles.image} source={require('../assets/logo.gif')} />
                 </View>
-                <TouchableHighlight onPress={this.navigateToTopicsScreen}>
+                <TouchableOpacity onPress={this.navigateToTopicsScreen}>
                     <View style={styles.startButton}>
                         <Text style={{textTransform: 'uppercase',
                                       color: '#fff',
                                       fontSize: 18,
                                       fontWeight: 'bold'}}>Начать</Text>
                     </View>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        color: '#3016B0',
+        color: '#1240AB',
         fontSize: 45,
         fontWeight: 'bold'
     },
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     startButton: {
         width: 176,
         height: 42,
-        backgroundColor: '#190773',
+        backgroundColor: '#1240AB',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
