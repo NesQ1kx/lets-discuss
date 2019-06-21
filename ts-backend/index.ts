@@ -1,137 +1,32 @@
 import Room from './common/entity/Room';
+import {CATEGORY_LIST} from './common/CategoryList';
+import {userData} from './common/types/UserData';
+import ws = require('websocket');
 
 // Optional. You will see this name in eg. "ps" or "top" command
 process.title = "node-chat";
+
  // Port where we"ll run the websocket server
 const webSocketsServerPort = 1337;
-
-const CATEGORY_LIST = [
-    {
-        id: 0,
-        name: "Любовь",
-        online: 30,
-        forChat: "любовь"
-    },
-    {
-        id: 1,
-        name: "Путешествие",
-        online: 65,
-        forChat: "путешествие"
-    },
-    {
-        id: 2,
-        name: "Экономика",
-        online: 65,
-        forChat: "экономику",
-    },
-    {
-        name: "Музыка",
-        online: 65,
-        forChat: "музыку",
-        id: 3
-    },
-    {
-        name: "Животные",
-        online: 65,
-        forChat: "животных",
-        id: 4
-    },
-    {
-        name: "Здоровье",
-        online: 65,
-        forChat: "здоровье",
-        id: 5
-    },
-    {
-        name: "Игры",
-        online: 65,
-        forChat: "игры",
-        id: 6
-    },
-    {
-        name: "Погода",
-        online: 65,
-        forChat: "погоду",
-        id: 7
-    },
-    {
-        name: "Экология",
-        online: 65,
-        forChat: "экологию",
-        id: 8
-    },
-    {
-        name: "Вечеринка",
-        online: 65,
-        forChat: "вечеринку",
-        id: 9
-    },
-    {
-        name: "Общение",
-        online: 65,
-        forChat: "общение",
-        id: 10
-    },
-    {
-        name: "Напитки",
-        online: 65,
-        forChat: "напитки",
-        id: 11
-    },
-    {
-        name: "Икусство",
-        online: 65,
-        forChat: "искусство",
-        id: 12
-    },
-    {
-        name: "Образ жизни",
-        online: 65,
-        forChat: "образ жизни",
-        id: 13
-    },
-    {
-        name: "Спорт",
-        online: 65,
-        forChat: "спорт",
-        id: 14
-    },
-    {
-        name: "Образование",
-        online: 65,
-        forChat: "образование",
-        id: 15
-    },
-    {
-        name: "Программирование",
-        online: 65,
-        forChat: "программирование",
-        id: 16
-    },
-];
-
-
 // websocket and http servers
 const webSocketServer = require("websocket").server;
 const http = require("http");
 const express = require("express");
 const app = express();
 const uuidv1 = require("uuid/v1");
-// var commands = require("./services/commands");
 
-/**
- * Global variables
- */
+
 // list of currently connected connections (users)
-let connections = [];
+let connections: ws.connection = [];
 let chatRooms: Room[] = [];
 
 /**
  * HTTP server
  */
-var server = http.createServer(function (request, response) {
+const server = http.createServer(function (request, response) {
     // Not important for us. We"re writing WebSocket server, not HTTP server
 });
+
 server.listen(webSocketsServerPort, function () {
     console.log((new Date()) + " Server is listening on port " + webSocketsServerPort);
 });
@@ -165,14 +60,14 @@ wsServer.on("request", function (request) {
     // user sent some message
     connection.on("message", function (message) {
         try {
-            var messageObject = JSON.parse(message.utf8Data);
+            const messageObject: JSON = JSON.parse(message.utf8Data);
             console.log(messageObject);
             if (!messageObject.hasOwnProperty("action") && !messageObject.hasOwnProperty("user_data")) {
                 errorCommand(connection, "Неправильный формат данных");
             }
 
-            var frontendCommand = messageObject["action"];
-            var userData = messageObject["user_data"];
+            const frontendCommand: string = messageObject["action"];
+            const userData: userData = messageObject["user_data"];
 
             switch (frontendCommand) {
                 case "LEAVE_ROOM":
@@ -221,16 +116,11 @@ wsServer.on("request", function (request) {
  * Utils functions
  */
 
-function errorCommand(socketConnection, errorMessage) {
-    errorMessage = errorMessage || "Что-то пошло не так";
-    socketConnection.sendUTF(JSON.stringify({
-        error: errorMessage
-    }));
-}
+const errorCommand = (socketConnection: ws.connection, errorMessage: string): void=> socketConnection.sendUTF(JSON.stringify({error: errorMessage || "Что-то пошло не так"}));
 
-const getRoomByUuid  = (uuid: string): Room => chatRooms.filter( (room: Room) => room.uuid === uuid)[0];
+const getRoomByUuid  = (uuid: string): Room | null => chatRooms.filter( (room: Room) => room.uuid === uuid)[0];
 
-const getReadyRoomByThemeId = (themeId: number): Room => chatRooms.filter( (room: Room) => room.themeId === themeId && room.connections.length > 0)[0];
+const getReadyRoomByThemeId = (themeId: number): Room | null => chatRooms.filter( (room: Room) => room.themeId === themeId && room.connections.length > 0)[0];
 
 
 function sendMessage(websocketConnection, userData) {
@@ -238,17 +128,16 @@ function sendMessage(websocketConnection, userData) {
         errorCommand(websocketConnection, "Мало данных");
     }
 
-    var message = userData.message;
-    var uuid = userData.uuid;
-
-    var room = getRoomByUuid(uuid);
+    const message: string = userData.message;
+    const uuid: string = userData.uuid;
+    const room: Room = getRoomByUuid(uuid);
 
     if (!room) {
         errorCommand(websocketConnection, "Бля, что-то пошло не так");
     }
 
     room.connections.forEach(function (item) {
-        if (item !== websocketConnection)  { // TODO: вот тут бля обязательно надо проверить, можно ли так сравнивать 2 разных конекшена, иначе себе будут приходить свои же сообщения
+        if (item !== websocketConnection)  {
             item.sendUTF(JSON.stringify({
                 action: "NEW_MESSAGE",
                 payload: {
@@ -260,7 +149,7 @@ function sendMessage(websocketConnection, userData) {
     })
 }
 
-function connectToRoom(websocketConnection, userData): string {
+const connectToRoom = (websocketConnection: ws.connection, userData): string => {
     if (!userData.hasOwnProperty("theme_id")) {
         errorCommand(websocketConnection, "Не предоставлена id темы")
     }
@@ -302,7 +191,7 @@ function connectToRoom(websocketConnection, userData): string {
     console.log('room created');
 
     return newRoom.uuid
-}
+};
 
 const leaveRoomAction = (roomUuid: string): void => {
     const room: Room = getRoomByUuid(roomUuid);
