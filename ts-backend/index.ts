@@ -1,3 +1,5 @@
+import Room from './common/entity/Room';
+
 // Optional. You will see this name in eg. "ps" or "top" command
 process.title = "node-chat";
  // Port where we"ll run the websocket server
@@ -110,28 +112,19 @@ const CATEGORY_LIST = [
 
 
 // websocket and http servers
-var webSocketServer = require("websocket").server;
-var http = require("http");
-var express = require("express");
-var app = express();
-var uuidv1 = require("uuid/v1");
+const webSocketServer = require("websocket").server;
+const http = require("http");
+const express = require("express");
+const app = express();
+const uuidv1 = require("uuid/v1");
 // var commands = require("./services/commands");
 
 /**
  * Global variables
  */
-
 // list of currently connected connections (users)
 let connections = [];
-//chat rooms list
-/*
- {
-    uuid: "",
-    themeId : <Number>,
-    connections: []
- }
- */
-var chatRooms = [];
+let chatRooms: Room[] = [];
 
 /**
  * HTTP server
@@ -235,17 +228,10 @@ function errorCommand(socketConnection, errorMessage) {
     }));
 }
 
-function getRoomByUuid(uuid) {
-    return chatRooms.filter(function (room) {
-        return room.uuid === uuid;
-    })[0];
-}
+const getRoomByUuid  = (uuid: string): Room => chatRooms.filter( (room: Room) => room.uuid === uuid)[0];
 
-function getReadyRoomByThemeId(themeId) {
-    return chatRooms.filter(function (room) {
-        return room.themeId === themeId && room.connections.length > 0;
-    })[0];
-}
+const getReadyRoomByThemeId = (themeId: number): Room => chatRooms.filter( (room: Room) => room.themeId === themeId && room.connections.length > 0)[0];
+
 
 function sendMessage(websocketConnection, userData) {
     if (!userData.hasOwnProperty("message") || !userData.hasOwnProperty("uuid")) {
@@ -274,7 +260,7 @@ function sendMessage(websocketConnection, userData) {
     })
 }
 
-function connectToRoom(websocketConnection, userData) {
+function connectToRoom(websocketConnection, userData): string {
     if (!userData.hasOwnProperty("theme_id")) {
         errorCommand(websocketConnection, "Не предоставлена id темы")
     }
@@ -298,10 +284,11 @@ function connectToRoom(websocketConnection, userData) {
         return readyRoom.uuid;
     }
 
-    const newRoom = {};
-    newRoom.uuid = uuidv1();
-    newRoom.themeId = themeId;
-    newRoom.connections = [websocketConnection];
+    const newRoom = new Room({
+        uuid: uuidv1(),
+        themeId: themeId,
+        connections: [websocketConnection]
+    });
 
     chatRooms.push(newRoom);
 
@@ -317,8 +304,8 @@ function connectToRoom(websocketConnection, userData) {
     return newRoom.uuid
 }
 
-function leaveRoomAction(roomUuid) {
-    const room = getRoomByUuid(roomUuid);
+const leaveRoomAction = (roomUuid: string): void => {
+    const room: Room = getRoomByUuid(roomUuid);
     if (room) {
         const users = room.connections;
 
@@ -332,27 +319,22 @@ function leaveRoomAction(roomUuid) {
             users.splice(i, 1);
         }
     }
-}
+};
 
 /**
  * REST API MODULE
  */
-app.get("/", function (req, res) {
+app.get("/",  (req, res) =>
     res.send("Hi from awesome project. Developers: " +
         "Jho00," +
-        "Нескук");
-});
+        "Нескук"));
 
-app.get("/getCategories", function (req, res) {
-    res.send(JSON.stringify(CATEGORY_LIST));
-});
+app.get("/getCategories",  (req, res) => res.send(JSON.stringify(CATEGORY_LIST)));
 
-app.get("/resetState", function (req, res) {
+app.get("/resetState",  (req, res) => {
     connections = [];
     chatRooms = [];
     res.send("done");
 });
 
-app.listen(3000, function () {
-    console.log("Example app listening on port 3000!");
-});
+app.listen(3000,  () => console.log("Example app listening on port 3000!"));
