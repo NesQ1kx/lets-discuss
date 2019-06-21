@@ -353,6 +353,12 @@ app.get("/getCategories", function (req, res) {
     res.send(JSON.stringify(CATEGORY_LIST));
 });
 
+app.get("/resetState", function (req, res) {
+    connections = [];
+    chatRooms = [];
+    res.send("done");
+});
+
 app.listen(3000, function () {
     console.log("Example app listening on port 3000!");
 });
