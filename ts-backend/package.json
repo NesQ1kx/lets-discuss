@@ -1,0 +1,23 @@
+{
+  "name": "ts-server",
+  "version": "1.0.0",
+  "description": "Server via TypeScript for Lets-Discuss app",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc index.ts",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NesQ1kx/lets-discuss"
+  },
+  "dependencies": {
+    "@types/node": "^12.0.8",
+    "express": "^4.17.1",
+    "uuid": "^3.3.2",
+    "websocket": "^1.0.28"
+  },
+  "author": "https://github.com/Jho00, https://github.com/NesQ1kx",
+  "license": "ISC"
+}
