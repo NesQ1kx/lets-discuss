@@ -1,12 +1,12 @@
 import Room from './common/entity/Room';
 import {CATEGORY_LIST} from './common/CategoryList';
 import {userData} from './common/types/UserData';
-import ws = require('websocket');
+import {incomeSocketCommands, outputSocketCommands} from "./common/IncomeSocketCommands";
 
 // Optional. You will see this name in eg. "ps" or "top" command
 process.title = "node-chat";
 
- // Port where we"ll run the websocket server
+// Port where we"ll run the websocket server
 const webSocketsServerPort = 1337;
 // websocket and http servers
 const webSocketServer = require("websocket").server;
@@ -17,7 +17,7 @@ const uuidv1 = require("uuid/v1");
 
 
 // list of currently connected connections (users)
-let connections: ws.connection = [];
+let connections: any[] = [];
 let chatRooms: Room[] = [];
 
 /**
@@ -49,11 +49,8 @@ wsServer.on("request", function (request) {
     // accept connection - you should check "request.origin" to make sure that
     // client is connecting from your website
     // (http://en.wikipedia.org/wiki/Same_origin_policy)
-    var connection = request.accept(null, request.origin);
-    // we need to know client index to remove them on "close" event
-    var index = connections.push(connection) - 1;
-    var userName = false;
-    var roomUuid = false;
+    let connection = request.accept(null, request.origin);
+    let roomUuid: string = null;
 
     console.log((new Date()) + " Connection accepted.");
 
@@ -70,17 +67,17 @@ wsServer.on("request", function (request) {
             const userData: userData = messageObject["user_data"];
 
             switch (frontendCommand) {
-                case "LEAVE_ROOM":
+                case incomeSocketCommands.LEAVE_ROOM_COMMAND:
                     if (!userData.hasOwnProperty("uuid")) errorCommand(connection, "Не предоставлен номер комнаты");
                     leaveRoomAction(userData.uuid);
-                    roomUuid = false;
+                    roomUuid = '';
                     break;
 
-                case "CONNECT":
+                case incomeSocketCommands.CONNECT_COMMAND:
                     roomUuid = connectToRoom(connection, userData);
                     break;
 
-                case "MESSAGE":
+                case incomeSocketCommands.MESSAGE_COMMAND:
                     sendMessage(connection, userData);
                     break;
 
@@ -97,12 +94,6 @@ wsServer.on("request", function (request) {
     // user disconnected
     connection.on("close", function (connection) {
         console.log("Closed connection!");
-        if (userName !== false) {
-            console.log((new Date()) + " Peer "
-                + connection.remoteAddress + " disconnected.");
-            // remove user from the list of connected connections
-            connections.splice(index, 1);
-        }
 
         if (roomUuid) {
             console.log('leave room:' + roomUuid);
@@ -112,18 +103,19 @@ wsServer.on("request", function (request) {
 
 });
 
+
 /**
  * Utils functions
  */
+// @ts-ignore
+const errorCommand = (socketConnection: any[], errorMessage: string): void => socketConnection.sendUTF(JSON.stringify({error: errorMessage || "Что-то пошло не так"}));
 
-const errorCommand = (socketConnection: ws.connection, errorMessage: string): void=> socketConnection.sendUTF(JSON.stringify({error: errorMessage || "Что-то пошло не так"}));
+const getRoomByUuid = (uuid: string): Room | null => chatRooms.filter((room: Room) => room.uuid === uuid)[0];
 
-const getRoomByUuid  = (uuid: string): Room | null => chatRooms.filter( (room: Room) => room.uuid === uuid)[0];
-
-const getReadyRoomByThemeId = (themeId: number): Room | null => chatRooms.filter( (room: Room) => room.themeId === themeId && room.connections.length > 0)[0];
+const getReadyRoomByThemeId = (themeId: number): Room | null => chatRooms.filter((room: Room) => room.themeId === themeId && room.connections.length > 0)[0];
 
 
-function sendMessage(websocketConnection, userData) {
+const sendMessage = (websocketConnection: any[], userData: userData): void => {
     if (!userData.hasOwnProperty("message") || !userData.hasOwnProperty("uuid")) {
         errorCommand(websocketConnection, "Мало данных");
     }
@@ -137,9 +129,9 @@ function sendMessage(websocketConnection, userData) {
     }
 
     room.connections.forEach(function (item) {
-        if (item !== websocketConnection)  {
+        if (item !== websocketConnection) {
             item.sendUTF(JSON.stringify({
-                action: "NEW_MESSAGE",
+                action: outputSocketCommands.NEW_MESSAGE_COMMAND,
                 payload: {
                     message: message
                 }
@@ -147,9 +139,9 @@ function sendMessage(websocketConnection, userData) {
             console.log('send message');
         }
     })
-}
+};
 
-const connectToRoom = (websocketConnection: ws.connection, userData): string => {
+const connectToRoom = (websocketConnection: any[], userData): string => {
     if (!userData.hasOwnProperty("theme_id")) {
         errorCommand(websocketConnection, "Не предоставлена id темы")
     }
@@ -160,15 +152,16 @@ const connectToRoom = (websocketConnection: ws.connection, userData): string => 
     if (readyRoom) {
         const companion = readyRoom.connections[0];
         readyRoom.connections.push(websocketConnection);
+        // @ts-ignore
         websocketConnection.sendUTF(JSON.stringify({
-            action: "CHAT_CONNECTED",
+            action: outputSocketCommands.CHAT_CONNECTED_COMMAND,
             payload: {
                 uuid: readyRoom.uuid
             }
         }));
         console.log('chat connected');
         companion.sendUTF(JSON.stringify({
-            action: "COMPANION_CONNECTED"
+            action: outputSocketCommands.COMPANION_CONNECTED_COMMAND
         }));
         return readyRoom.uuid;
     }
@@ -181,8 +174,9 @@ const connectToRoom = (websocketConnection: ws.connection, userData): string => 
 
     chatRooms.push(newRoom);
 
+    // @ts-ignore
     websocketConnection.sendUTF(JSON.stringify({
-        action: "ROOM_CREATED",
+        action: outputSocketCommands.ROOM_CREATED_COMMAND,
         payload: {
             uuid: newRoom.uuid,
             theme_id: themeId
@@ -201,7 +195,7 @@ const leaveRoomAction = (roomUuid: string): void => {
         for (let i = 0; i < users.length; i++) {
             console.log("SHOULD SEND CHAT CLOSED EVENT");
             users[i].sendUTF(JSON.stringify({
-                action: "CHAT_CLOSED"
+                action: outputSocketCommands.CHAT_CLOSED_COMMAND
             }));
         }
         for (let i = 0; i < users.length; i++) {
@@ -213,17 +207,17 @@ const leaveRoomAction = (roomUuid: string): void => {
 /**
  * REST API MODULE
  */
-app.get("/",  (req, res) =>
+app.get("/", (req, res) =>
     res.send("Hi from awesome project. Developers: " +
         "Jho00," +
         "Нескук"));
 
-app.get("/getCategories",  (req, res) => res.send(JSON.stringify(CATEGORY_LIST)));
+app.get("/getCategories", (req, res) => res.send(JSON.stringify(CATEGORY_LIST)));
 
-app.get("/resetState",  (req, res) => {
+app.get("/resetState", (req, res) => {
     connections = [];
     chatRooms = [];
     res.send("done");
 });
 
-app.listen(3000,  () => console.log("Example app listening on port 3000!"));
+app.listen(3000, () => console.log("Example app listening on port 3000!"));

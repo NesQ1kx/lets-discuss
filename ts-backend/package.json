@@ -5,8 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc index.ts",
-    "start": "node index.js"
+    "build": "tsc  --target ES2016 index.ts",
+    "start": "npm build && babel-node --presets es2015 index.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,9 @@
     "@types/node": "^12.0.8",
     "express": "^4.17.1",
     "uuid": "^3.3.2",
-    "websocket": "^1.0.28"
+    "websocket": "^1.0.28",
+    "babel-cli": "^6.0.0",
+    "babel-preset-es2015": "^6.0.0"
   },
   "author": "https://github.com/Jho00, https://github.com/NesQ1kx",
   "license": "ISC"

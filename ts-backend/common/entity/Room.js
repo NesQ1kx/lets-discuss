@@ -1,37 +1,25 @@
-import {roomOption} from "../types/RoomOption";
-
 export default class Room {
-    private _uuid?: string;
-    private _themeId?: number;
-    private _connections?: any[];
-
-    constructor(roomOption: roomOption) {
+    constructor(roomOption) {
         this._uuid = roomOption.uuid || null;
         this._themeId = roomOption.themeId || null;
         this._connections = roomOption.connections || null;
     }
-
-    get uuid(): string {
+    get uuid() {
         return this._uuid;
     }
-
-    set uuid(value: string) {
+    set uuid(value) {
         this._uuid = value;
     }
-
-    get themeId(): number {
+    get themeId() {
         return this._themeId;
     }
-
-    set themeId(value: number) {
+    set themeId(value) {
         this._themeId = value;
     }
-
-    get connections(): any[] {
+    get connections() {
         return this._connections;
     }
-
-    set connections(value: any[]) {
+    set connections(value) {
         this._connections = value;
     }
 }
