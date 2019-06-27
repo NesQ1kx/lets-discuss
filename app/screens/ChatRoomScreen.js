@@ -1,27 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator, ScrollView, Image, KeyboardAvoidingView, FlatList } from 'react-native';
-import { SearchCompanion } from "../components/SearchCompanion";
-import { CancelSearchButton } from "../components/CancelSearchButton";
-import { CancelDialogSearchModal } from "../components/CancelDialogSearchModal";
-import {NextDialogButton} from "../components/NextDialogButton";
-import { EndDialogButton } from "../components/EndDialogButton";
-import {NextDialogModal} from "../components/NextDialogModal";
-import {EndDialogModal} from "../components/EndDialogModal";
-import {CompanionLeft} from "../components/CompanionLeft";
-import {CompanionLeftModal} from "../components/CompanionLeftModal";
-import UserInput from "../components/UserInput";
-import {OutgoingMessage} from "../components/OutgoingMessage";
-import {IncomingMessage} from "../components/IncomingMessage";
-import SingleSocket from "../services/SocketSingletone";
-import {CompanionFound} from "../components/CompanionFound";
+import React from "react";
+import { StyleSheet, Text, View, Image, KeyboardAvoidingView, FlatList } from "react-native";
 
+import { MODAL_MESSAGES, POPUP_MESSAGES, SOCKET_ACTIONS, CHAT_ROOM_ACTION_BUTTONS } from "../constants";
+import { OutgoingMessage, IncomingMessage, UserInput, ModalWindow, PopupMessage, ChatRoomActionButton } from "../components";
+// import { OutgoingMessage } from "../components/NewMessage/OutgoingMessage";
+// import { IncomingMessage } from "../components/NewMessage/IncomingMessage";
+// import { UserInput } from "../components/UserInput";
+// import { ModalWindow } from "../components/Modal/ModalWindow";
+// import { PopupMessage } from "../components/Popup/PopupMessage";
+// import { ChatRoomActionButton } from "../components/Buttons/ChatRoomActionButton";
+// import { MODAL_MESSAGES } from "../constants/modalMessages";
+// import { POPUP_MESSAGES } from "../constants/popupMessages";
+// import { SOCKET_ACTIONS } from "../constants/socketActions";
+// import { CHAT_ROOM_ACTION_BUTTONS } from "../constants/chatRoomActionButtons";
+
+
+import { SingleSocket } from "../services";
 
 export default class ChatRoomScreen extends React.Component {
     constructor(props) {
         super(props);
         this.navigation = this.props.navigation;
-        this.item = this.navigation.getParam('item');
-        this.roomInfo = this.navigation.getParam('roomInfo');
+        this.item = this.navigation.getParam("item");
+        this.roomInfo = this.navigation.getParam("roomInfo");
         this.state = { searchCompanion: true,
                        companionFound: false,
                        cancelSearchDialogModalVisible: false,
@@ -45,7 +46,7 @@ export default class ChatRoomScreen extends React.Component {
     }
 
     componentDidMount() {
-        if (this.roomInfo.action === 'CHAT_CONNECTED') {
+        if (this.roomInfo.action === SOCKET_ACTIONS.CHAT_CONNECTED) {
             this.setState({ searchCompanion: false});
         }
 
@@ -53,16 +54,16 @@ export default class ChatRoomScreen extends React.Component {
             const data = JSON.parse(ev.data);
             console.log(data.action);
             switch (data.action) {
-                case 'COMPANION_CONNECTED':
+                case SOCKET_ACTIONS.COMPANION_CONNECTED:
                     this.setState({ searchCompanion: false, companionFound: true});
                     setTimeout(() => {
                         this.setState({ companionFound: false })
                     }, 1500);
                     break;
-                case 'NEW_MESSAGE':
+                case SOCKET_ACTIONS.NEW_MESSAGE:
                     this.handleIncomingMessage(data.payload.message);
                     break;
-                case 'CHAT_CLOSED':
+                case SOCKET_ACTIONS.CHAT_CLOSED:
                     this.setState({ companionLeftModalVisible: true });
                     break;
             }
@@ -83,10 +84,10 @@ export default class ChatRoomScreen extends React.Component {
 
     positiveCancelSearchModalAnswer() {
         this.setState({ cancelSearchDialogModalVisible: false}, () => {
-            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: {uuid: this.roomInfo.payload.uuid} }));
+            SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: {uuid: this.roomInfo.payload.uuid} }));
             SingleSocket.instance.close();
             SingleSocket.instance = null;
-            this.navigation.navigate('TopicsScreen');
+            this.navigation.navigate("TopicsScreen");
         })
     }
 
@@ -96,10 +97,10 @@ export default class ChatRoomScreen extends React.Component {
 
     positiveNextDialogModalAnswer() {
         this.setState({ nextDialogModalVisible: false });
-        SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: {uuid: this.roomInfo.payload.uuid} }));
+        SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: {uuid: this.roomInfo.payload.uuid} }));
         SingleSocket.instance.close();
         SingleSocket.instance = null;
-        SingleSocket.instance.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: this.item.id}}))
+        SingleSocket.instance.send(JSON.stringify({action: SOCKET_ACTIONS.CONNECT, user_data: {theme_id: this.item.id}}))
     }
 
     negativeNextDialogModalAnswer() {
@@ -108,10 +109,10 @@ export default class ChatRoomScreen extends React.Component {
 
     positiveEndDialogModalAnswer() {
         this.setState({ endDialogModalVisible: false}, () => {
-            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid } }));
+            SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: { uuid: this.roomInfo.payload.uuid } }));
             SingleSocket.instance.close();
             SingleSocket.instance = null;
-            this.navigation.navigate('TopicsScreen');
+            this.navigation.navigate("TopicsScreen");
         });
     }
 
@@ -121,17 +122,17 @@ export default class ChatRoomScreen extends React.Component {
 
     newCompanionAnswer() {
         this.setState({ companionLeftModalVisible: false});
-        SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid }}));
-        SingleSocket.instance.send(JSON.stringify({action: 'CONNECT', user_data: {theme_id: this.item.id}}));
+        SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: { uuid: this.roomInfo.payload.uuid }}));
+        SingleSocket.instance.send(JSON.stringify({action: SOCKET_ACTIONS.CONNECT, user_data: {theme_id: this.item.id}}));
         this.setState({ searchCompanion: true});
     }
 
     chooseTopicAnswer() {
         this.setState({ companionLeftModalVisible: false }, () => {
-            SingleSocket.instance.send(JSON.stringify({ action: 'LEAVE_ROOM', user_data: { uuid: this.roomInfo.payload.uuid } }));
+            SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: { uuid: this.roomInfo.payload.uuid } }));
             SingleSocket.instance.close();
             SingleSocket.instance = null;
-            this.navigation.navigate('TopicsScreen')
+            this.navigation.navigate("TopicsScreen")
         });
     }
 
@@ -150,7 +151,7 @@ export default class ChatRoomScreen extends React.Component {
             incoming: false
         });
         this.setState({ messages: messages });
-        SingleSocket.instance.send(JSON.stringify({ action: 'MESSAGE', user_data: {message: message, uuid: this.roomInfo.payload.uuid }}));
+        SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.MESSAGE, user_data: {message: message, uuid: this.roomInfo.payload.uuid }}));
     }
 
     handleIncomingMessage(message) {
@@ -168,28 +169,53 @@ export default class ChatRoomScreen extends React.Component {
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={{color: '#ffffff', fontSize: 16}}>Давай обсудим {this.item.forChat}</Text>
+                    <Text style={{color: "#ffffff", fontSize: 16}}>Let's discuss {this.item.forChat}</Text>
                     <View style={styles.buttonContainer}>
-                        {this.state.searchCompanion && <CancelSearchButton cancelSearch={this.onPressCancelSearchButton}/>}
-                        {!this.state.searchCompanion && <NextDialogButton nextDialog={this.onPressNextDialogButton}/>}
-                        {!this.state.searchCompanion && <EndDialogButton endDialog={this.onPressEndDialogButton}/>}
+                        {this.state.searchCompanion && <ChatRoomActionButton action={this.onPressCancelSearchButton}
+                                                                             text={CHAT_ROOM_ACTION_BUTTONS.CANCEL_SEARCH_BUTTON.text}
+                                                                             image={CHAT_ROOM_ACTION_BUTTONS.CANCEL_SEARCH_BUTTON.image} />}
+                        {!this.state.searchCompanion && <ChatRoomActionButton action={this.onPressNextDialogButton} 
+                                                                              text={CHAT_ROOM_ACTION_BUTTONS.NEXT_DIALOG_BUTTON.text}
+                                                                              image={CHAT_ROOM_ACTION_BUTTONS.NEXT_DIALOG_BUTTON.image}/>}
+                        {!this.state.searchCompanion && <ChatRoomActionButton action={this.onPressEndDialogButton}
+                                                                              text={CHAT_ROOM_ACTION_BUTTONS.END_DIALOG_BUTTON.text}
+                                                                              image={CHAT_ROOM_ACTION_BUTTONS.END_DIALOG_BUTTON.image} />}
                     </View>
                 </View>
-                {this.state.companionFound && <CompanionFound />}
-                {this.state.searchCompanion && <SearchCompanion />}
-                {this.state.companionLeftModalVisible && <CompanionLeft />}
-                {this.state.cancelSearchDialogModalVisible && <CancelDialogSearchModal positiveAnswer={this.positiveCancelSearchModalAnswer}
-                                                                                       negativeAnswer={this.negativeCancelSearchModalAnswer}/>}
-                {this.state.nextDialogModalVisible && <NextDialogModal positiveAnswer={this.positiveNextDialogModalAnswer}
-                                                                       negativeAnswer={this.negativeNextDialogModalAnswer}/>}
-                {this.state.endDialogModalVisible && <EndDialogModal positiveAnswer={this.positiveEndDialogModalAnswer}
-                                                                     negativeAnswer={this.negativeEndDialogModalAnswer}/>}
-                {this.state.companionLeftModalVisible && <CompanionLeftModal newCompanion={this.newCompanionAnswer}
-                                                                             chooseTopic={this.chooseTopicAnswer}/>}
+                {this.state.companionFound && <PopupMessage message={POPUP_MESSAGES.companionFoundPopupMessage.text}
+                                                            color={POPUP_MESSAGES.companionFoundPopupMessage.color} />}
+                {this.state.searchCompanion && <PopupMessage message={POPUP_MESSAGES.searchCompanionPopupMessage.text}
+                                                             color={POPUP_MESSAGES.searchCompanionPopupMessage.color} />}
+                {this.state.companionLeftModalVisible && <PopupMessage message={POPUP_MESSAGES.companionLeftPopupMessage.text}
+                                                                       color={POPUP_MESSAGES.companionLeftPopupMessage.color} />}
+                {this.state.cancelSearchDialogModalVisible && <ModalWindow positiveAnswer={this.positiveCancelSearchModalAnswer}
+                                                                           negativeAnswer={this.negativeCancelSearchModalAnswer}
+                                                                           modalTitle={MODAL_MESSAGES.cancelDialogSearchModal.modalTitle}
+                                                                           modalMessage={MODAL_MESSAGES.cancelDialogSearchModal.modalMessage}
+                                                                           firstAnswer={MODAL_MESSAGES.cancelDialogSearchModal.firstAnswer}
+                                                                           secondAnswer={MODAL_MESSAGES.cancelDialogSearchModal.secondAnswer} />}
+                {this.state.nextDialogModalVisible && <ModalWindow positiveAnswer={this.positiveNextDialogModalAnswer}
+                                                                       negativeAnswer={this.negativeNextDialogModalAnswer}
+                                                                       modalTitle={MODAL_MESSAGES.nexDialogModal.modalTitle}
+                                                                       modalMessage={MODAL_MESSAGES.nexDialogModal.modalMessage}
+                                                                       firstAnswer={MODAL_MESSAGES.nexDialogModal.firstAnswer}
+                                                                       secondAnswer={MODAL_MESSAGES.nexDialogModal.secondAnswer} />}
+                {this.state.endDialogModalVisible && <ModalWindow positiveAnswer={this.positiveEndDialogModalAnswer}
+                                                                  negativeAnswer={this.negativeEndDialogModalAnswer}
+                                                                  modalTitle={MODAL_MESSAGES.endDialogModal.modalTitle}
+                                                                  modalMessage={MODAL_MESSAGES.endDialogModal.modalMessage}
+                                                                  firstAnswer={MODAL_MESSAGES.endDialogModal.firstAnswer}
+                                                                  secondAnswer={MODAL_MESSAGES.endDialogModal.secondAnswer} />}
+                {this.state.companionLeftModalVisible && <ModalWindow positiveAnswer={this.newCompanionAnswer}
+                                                                      negativeAnswer={this.chooseTopicAnswer}
+                                                                      modalTitle={MODAL_MESSAGES.companionLeftModal.modalTitle}
+                                                                      modalMessage={MODAL_MESSAGES.companionLeftModal.modalMessage}
+                                                                      firstAnswer={MODAL_MESSAGES.companionLeftModal.firstAnswer}
+                                                                      secondAnswer={MODAL_MESSAGES.companionLeftModal.secondAnswer} />}
                 {this.state.searchCompanion && !this.state.cancelSearchDialogModalVisible &&
                 (<View style={styles.searchIndicator}>
-                    <Image style={{width: 100, height: 100, left: '50%', marginLeft: -50}}
-                        source={require("../assets/loading_spiner.gif")}/>
+                    <Image style={{width: 100, height: 100, left: "50%", marginLeft: -50}}
+                        source={require("../assets/loading_spiner.gif")} />
                 </View>)
                 }
                 {!this.state.searchCompanion && !this.state.companionLeftModalVisible && !this.state.endDialogModalVisible && (
@@ -198,12 +224,11 @@ export default class ChatRoomScreen extends React.Component {
                         renderItem={this.renderItem}
                         data={this.state.messages}
                         keyExtractor={this._keyExtractor}
-                        inverted
-                    />
+                        inverted />
                 )}
                 {!this.state.searchCompanion && !this.state.companionLeftModalVisible && !this.state.endDialogModalVisible && (
                     <KeyboardAvoidingView behavior="padding">
-                        <UserInput onSendMessage={this.handleOutgoingMessage}/>
+                        <UserInput onSendMessage={this.handleOutgoingMessage} />
                     </KeyboardAvoidingView>
                 )}
             </View>
@@ -213,32 +238,33 @@ export default class ChatRoomScreen extends React.Component {
 
 const styles = StyleSheet.create({
     header: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
         height: 80,
-        backgroundColor: '#1240AB',
-        zIndex: 10
+        backgroundColor: "#1240AB",
+        zIndex: 10,
+        paddingTop: 20
     },
     buttonContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-around'
+      flexDirection: "row",
+      justifyContent: "space-around"
     },
     container: {
         flex: 1
     },
     searchIndicator: {
         flex: 1,
-        top: '25%',
+        top: "25%",
         zIndex: -1
     },
     messageContainer: {
-        position: 'absolute',
+        position: "absolute",
         bottom: 50,
-        width: '100%',
-        height: '100%',
-        borderColor: '#000000',
+        width: "100%",
+        height: "100%",
+        borderColor: "#000000",
         borderWidth: 1,
     }
 });

@@ -1,22 +1,20 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-export const CompanionLeftModal = (props) => {
+export const ModalWindow = (props) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Собеседник покинул беседу</Text>
-            <Text style={styles.tip}>Собеседник поуинул беседу. Искать нового собеседника или перейти к выбору темы?</Text>
+            <Text style={styles.header}>{props.modalTitle}</Text>
+            <Text style={styles.tip}>{props.modalMessage}</Text>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={props.newCompanion}>
+                <TouchableOpacity onPress={props.positiveAnswer}>
                     <View style={styles.button}>
-                        <Text style={styles.buttonText}>Новый</Text>
-                        <Text style={styles.buttonText}>собеседник</Text>
+                        <Text style={styles.buttonText}>{props.firstAnswer}</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={props.chooseTopic}>
+                <TouchableOpacity onPress={props.negativeAnswer}>
                     <View style={styles.button}>
-                        <Text style={styles.buttonText}>Выбрать</Text>
-                        <Text style={styles.buttonText}>тему</Text>
+                        <Text style={styles.buttonText}>{props.secondAnswer}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -35,6 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderRadius: 2,
         shadowOffset: { width: 1, height: 10 },
+        elevation: 3,
         shadowOpacity: 0.3,
         shadowRadius: 5,
         zIndex: 99,
@@ -58,18 +57,17 @@ const styles = StyleSheet.create({
     },
     button: {
         width: 90,
-        height: 35,
+        height: 30,
         borderColor: '#FFCC00',
         borderWidth: 2,
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
-        marginLeft: 10,
+        marginLeft: 10
     },
     buttonText: {
         color: '#190773',
         textTransform: 'uppercase',
-        fontSize: 11,
+        fontSize: 16,
     }
 });
