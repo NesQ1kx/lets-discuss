@@ -1,9 +1,9 @@
-// export const socketHolder = new WebSocket('ws://192.168.1.65:1337');
+import {LOCAL_IP} from "../constants/url";
 
 let singleSocket = null;
 let singletonEnforcer = Symbol();
 
-class SingleSocket {
+export class SingleSocket {
     constructor(enforcer) {
         if (enforcer !== singletonEnforcer) {
             throw "Instantiation failed: use Socket.getInstance() instead of new."
@@ -12,7 +12,7 @@ class SingleSocket {
 
     static get instance() {
         if (!this[singleSocket]) {
-            this[singleSocket] = new WebSocket('ws://192.168.157.27:1337');
+            this[singleSocket] = new WebSocket(`ws://${LOCAL_IP}:1337`);
         }
 
         return this[singleSocket];
@@ -20,5 +20,3 @@ class SingleSocket {
 
     static set instance(v) { this[singleSocket] =  v}
 }
-
-export default SingleSocket

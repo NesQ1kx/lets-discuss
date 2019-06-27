@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-const LOCAL_ADDRESS = 'http://192.168.157.27:3000';
+import {LOCAL_IP} from "../constants/url";
+
+const MAIN_URL = `http://${LOCAL_IP}:3000`;
 
 export const httpService = function() {
     return {
         get: function(url) {
-            return axios.get(`${LOCAL_ADDRESS}/${url}`);
+            return axios.get(`${MAIN_URL}/${url}`);
         }
     }
 }();

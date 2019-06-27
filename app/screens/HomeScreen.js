@@ -40,17 +40,17 @@ export default class HomeScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>Quick {'\n'} Chat</Text>
-                <Text style={styles.subtitle}>Анонимные чаты по интересам</Text>
+                <Text style={styles.title}>Let's {'\n'} Discuss</Text>
+                <Text style={styles.subtitle}>Anonymous chats with the same interests</Text>
                 <View style={styles.exampleChat}>
                     <View style={styles.exampleMessage1}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Выбери тему</Text>
+                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Choose topic</Text>
                     </View>
                     <View style={styles.exampleMessage2}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Начни обсуждение с собеседником</Text>
+                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Start a discussion with someone</Text>
                     </View>
                     <View style={styles.exampleMessage1}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Всего в 2 клика</Text>
+                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Just 2 clicks</Text>
                     </View>
                 </View>
                 <View style={styles.imageContainer}>
@@ -61,7 +61,7 @@ export default class HomeScreen extends React.Component {
                         <Text style={{textTransform: 'uppercase',
                                       color: '#fff',
                                       fontSize: 18,
-                                      fontWeight: 'bold'}}>Начать</Text>
+                                      fontWeight: 'bold'}}>Start</Text>
                     </View>
                 </TouchableOpacity>
             </View>

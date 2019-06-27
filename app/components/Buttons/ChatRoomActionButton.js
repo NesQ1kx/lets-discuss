@@ -1,12 +1,12 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-export const CancelSearchButton = (props) => {
+export const ChatRoomActionButton = (props) => {
     return (
-        <TouchableOpacity onPress={props.cancelSearch}>
+        <TouchableOpacity onPress={props.action}>
             <View style={styles.container}>
-                <Image source={require('../assets/cancel_search.png')}/>
-                <Text style={styles.text}>отменить</Text>
+                <Image source={props.image}/>
+                <Text style={styles.text}>{props.text}</Text>
             </View>
         </TouchableOpacity>
 
