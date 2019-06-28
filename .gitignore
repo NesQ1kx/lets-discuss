@@ -10,6 +10,8 @@ logs/*
 build.tar.gz
 !.mvn/wrapper/maven-wrapper.jar
 .idea/workspace.xml
+.vscode
+/app/.expo
 
 ### STS ###
 .apt_generated

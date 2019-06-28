@@ -1,10 +1,10 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
-export const CompanionFound = () => {
+export const PopupMessage = (props) => {
     return(
-        <View style={styles.container}>
-            <Text style={styles.text}>Собеседник найден</Text>
+        <View style={[styles.container, {backgroundColor: props.color}]}>
+            <Text style={styles.text}>{props.message}</Text>
         </View>
     )
 };
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 2,
-        backgroundColor: '#27AE60',
         width: '100%',
         height: 24
     },
