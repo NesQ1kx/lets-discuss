@@ -47,7 +47,7 @@ export default class HomeScreen extends React.Component {
                         <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Choose topic</Text>
                     </View>
                     <View style={styles.exampleMessage2}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Start a discussion with someone</Text>
+                        <Text style={{textTransform: 'uppercase', color: '#00073D', paddingLeft: 20}}>Start a discussion with someone</Text>
                     </View>
                     <View style={styles.exampleMessage1}>
                         <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Just 2 clicks</Text>
