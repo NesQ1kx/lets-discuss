@@ -5,7 +5,7 @@ import {createStackNavigator, createAppContainer} from 'react-navigation';
 import TopicsScreen from "./screens/TopicsScreen";
 import ChatRoomScreen from "./screens/ChatRoomScreen";
 
-class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
       <HomeScreen />

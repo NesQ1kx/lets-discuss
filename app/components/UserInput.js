@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
 
-export default class UserInput extends React.Component {
+export class UserInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = { message: '' };
