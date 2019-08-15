@@ -15,17 +15,13 @@ export default class ChatRoomScreen extends React.Component {
         this.state = { searchCompanion: true,
                        companionFound: false,
                        cancelSearchDialogModalVisible: false,
-                       nextDialogModalVisible: false,
                        endDialogModalVisible: false,
                        companionLeftModalVisible: false,
                        messages: []};
         this.onPressCancelSearchButton = this.onPressCancelSearchButton.bind(this);
         this.positiveCancelSearchModalAnswer = this.positiveCancelSearchModalAnswer.bind(this);
         this.negativeCancelSearchModalAnswer = this.negativeCancelSearchModalAnswer.bind(this);
-        this.onPressNextDialogButton = this.onPressNextDialogButton.bind(this);
         this.onPressEndDialogButton = this.onPressEndDialogButton.bind(this);
-        this.positiveNextDialogModalAnswer = this.positiveNextDialogModalAnswer.bind(this);
-        this.negativeNextDialogModalAnswer = this.negativeNextDialogModalAnswer.bind(this);
         this.positiveEndDialogModalAnswer = this.positiveEndDialogModalAnswer.bind(this);
         this.negativeEndDialogModalAnswer = this.negativeEndDialogModalAnswer.bind(this);
         this.newCompanionAnswer = this.newCompanionAnswer.bind(this);
@@ -63,10 +59,6 @@ export default class ChatRoomScreen extends React.Component {
         this.setState({ cancelSearchDialogModalVisible: true });
     }
 
-    onPressNextDialogButton() {
-        this.setState({ nextDialogModalVisible: true});
-    }
-
     onPressEndDialogButton() {
         this.setState( { endDialogModalVisible: true });
     }
@@ -82,18 +74,6 @@ export default class ChatRoomScreen extends React.Component {
 
     negativeCancelSearchModalAnswer() {
         this.setState({ cancelSearchDialogModalVisible: false});
-    }
-
-    positiveNextDialogModalAnswer() {
-        this.setState({ nextDialogModalVisible: false });
-        SingleSocket.instance.send(JSON.stringify({ action: SOCKET_ACTIONS.LEAVE_ROOM, user_data: {uuid: this.roomInfo.payload.uuid} }));
-        SingleSocket.instance.close();
-        SingleSocket.instance = null;
-        SingleSocket.instance.send(JSON.stringify({action: SOCKET_ACTIONS.CONNECT, user_data: {theme_id: this.item.id}}))
-    }
-
-    negativeNextDialogModalAnswer() {
-        this.setState({ nextDialogModalVisible: false });
     }
 
     positiveEndDialogModalAnswer() {
@@ -163,9 +143,6 @@ export default class ChatRoomScreen extends React.Component {
                         {this.state.searchCompanion && <ChatRoomActionButton action={this.onPressCancelSearchButton}
                                                                              text={CHAT_ROOM_ACTION_BUTTONS.CANCEL_SEARCH_BUTTON.text}
                                                                              image={CHAT_ROOM_ACTION_BUTTONS.CANCEL_SEARCH_BUTTON.image} />}
-                        {!this.state.searchCompanion && <ChatRoomActionButton action={this.onPressNextDialogButton} 
-                                                                              text={CHAT_ROOM_ACTION_BUTTONS.NEXT_DIALOG_BUTTON.text}
-                                                                              image={CHAT_ROOM_ACTION_BUTTONS.NEXT_DIALOG_BUTTON.image}/>}
                         {!this.state.searchCompanion && <ChatRoomActionButton action={this.onPressEndDialogButton}
                                                                               text={CHAT_ROOM_ACTION_BUTTONS.END_DIALOG_BUTTON.text}
                                                                               image={CHAT_ROOM_ACTION_BUTTONS.END_DIALOG_BUTTON.image} />}
@@ -183,12 +160,6 @@ export default class ChatRoomScreen extends React.Component {
                                                                            modalMessage={MODAL_MESSAGES.cancelDialogSearchModal.modalMessage}
                                                                            firstAnswer={MODAL_MESSAGES.cancelDialogSearchModal.firstAnswer}
                                                                            secondAnswer={MODAL_MESSAGES.cancelDialogSearchModal.secondAnswer} />}
-                {this.state.nextDialogModalVisible && <ModalWindow positiveAnswer={this.positiveNextDialogModalAnswer}
-                                                                       negativeAnswer={this.negativeNextDialogModalAnswer}
-                                                                       modalTitle={MODAL_MESSAGES.nexDialogModal.modalTitle}
-                                                                       modalMessage={MODAL_MESSAGES.nexDialogModal.modalMessage}
-                                                                       firstAnswer={MODAL_MESSAGES.nexDialogModal.firstAnswer}
-                                                                       secondAnswer={MODAL_MESSAGES.nexDialogModal.secondAnswer} />}
                 {this.state.endDialogModalVisible && <ModalWindow positiveAnswer={this.positiveEndDialogModalAnswer}
                                                                   negativeAnswer={this.negativeEndDialogModalAnswer}
                                                                   modalTitle={MODAL_MESSAGES.endDialogModal.modalTitle}

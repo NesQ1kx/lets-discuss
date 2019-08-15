@@ -6,4 +6,4 @@ export const SOCKET_ACTIONS = {
     LEAVE_ROOM: "LEAVE_ROOM",
     CONNECT: "CONNECT",
     MESSAGE: "MESSAGE"
-}
+};

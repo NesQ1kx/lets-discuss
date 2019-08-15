@@ -1,104 +1,104 @@
 export const CATEGORY_LIST = [
     {
-        id: 0,
-        name: "Любовь",
-        online: 30,
-        forChat: "любовь"
-    },
-    {
         id: 1,
-        name: "Путешествие",
+        name: "Journey",
         online: 65,
-        forChat: "путешествие"
+        forChat: "journey"
     },
     {
         id: 2,
-        name: "Экономика",
+        name: "Economy",
         online: 65,
-        forChat: "экономику",
+        forChat: "economy",
     },
     {
-        name: "Музыка",
+        name: "Music",
         online: 65,
-        forChat: "музыку",
+        forChat: "music",
         id: 3
     },
     {
-        name: "Животные",
+        name: "Animals",
         online: 65,
-        forChat: "животных",
+        forChat: "animals",
         id: 4
     },
     {
-        name: "Здоровье",
+        name: "Health",
         online: 65,
-        forChat: "здоровье",
+        forChat: "health",
         id: 5
     },
     {
-        name: "Игры",
+        name: "Games",
         online: 65,
-        forChat: "игры",
+        forChat: "games",
         id: 6
     },
     {
-        name: "Погода",
+        name: "Weather",
         online: 65,
-        forChat: "погоду",
+        forChat: "weather",
         id: 7
     },
     {
-        name: "Экология",
+        name: "Ecology",
         online: 65,
-        forChat: "экологию",
+        forChat: "ecology",
         id: 8
     },
     {
-        name: "Вечеринка",
+        name: "Party",
         online: 65,
-        forChat: "вечеринку",
+        forChat: "party",
         id: 9
     },
     {
-        name: "Общение",
+        name: "Communication",
         online: 65,
-        forChat: "общение",
+        forChat: "communication",
         id: 10
     },
     {
-        name: "Напитки",
+        name: "Drinks",
         online: 65,
-        forChat: "напитки",
+        forChat: "drinks",
         id: 11
     },
     {
-        name: "Икусство",
+        name: "Art",
         online: 65,
-        forChat: "искусство",
+        forChat: "art",
         id: 12
     },
     {
-        name: "Образ жизни",
+        name: "Lifestyle",
         online: 65,
-        forChat: "образ жизни",
+        forChat: "lifestyle",
         id: 13
     },
     {
-        name: "Спорт",
+        name: "Sport",
         online: 65,
-        forChat: "спорт",
+        forChat: "sport",
         id: 14
     },
     {
-        name: "Образование",
+        name: "Education",
         online: 65,
-        forChat: "образование",
+        forChat: "education",
         id: 15
     },
     {
-        name: "Программирование",
+        name: "Programming",
         online: 65,
-        forChat: "программирование",
+        forChat: "programming",
         id: 16
     },
+    {
+        id: 17,
+        name: "Love",
+        online: 30,
+        forChat: "love"
+    }
 ];

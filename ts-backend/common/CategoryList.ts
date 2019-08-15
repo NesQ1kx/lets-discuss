@@ -1,11 +1,5 @@
 export const CATEGORY_LIST = [
     {
-        id: 0,
-        name: "Love",
-        online: 30,
-        forChat: "love"
-    },
-    {
         id: 1,
         name: "Journey",
         online: 65,
@@ -101,4 +95,10 @@ export const CATEGORY_LIST = [
         forChat: "programming",
         id: 16
     },
+    {
+        id: 17,
+        name: "Love",
+        online: 30,
+        forChat: "love"
+    }
 ];

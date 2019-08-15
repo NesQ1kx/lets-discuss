@@ -44,13 +44,13 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.subtitle}>Anonymous chats with the same interests</Text>
                 <View style={styles.exampleChat}>
                     <View style={styles.exampleMessage1}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Choose topic</Text>
+                        <Text style={{ color: '#00073D'}}>Choose topic</Text>
                     </View>
                     <View style={styles.exampleMessage2}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D', paddingLeft: 20}}>Start a discussion with someone</Text>
+                        <Text style={{ color: '#00073D', paddingLeft: 20, flexWrap: 'wrap'}}>Start a discussion</Text>
                     </View>
                     <View style={styles.exampleMessage1}>
-                        <Text style={{textTransform: 'uppercase', color: '#00073D'}}>Just 2 clicks</Text>
+                        <Text style={{ color: '#00073D'}}>Just 2 clicks</Text>
                     </View>
                 </View>
                 <View style={styles.imageContainer}>
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#1240AB',
-        fontSize: 45,
+        fontSize: 35,
         fontWeight: 'bold'
     },
     subtitle: {

@@ -1,6 +1,6 @@
 export const MOCK_TOPICS = [
     {
-        id: 0,
+        id: 17,
         image: require("../assets/TopicsImages/love.png"),
     },
     {
